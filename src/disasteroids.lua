@@ -32,6 +32,7 @@ function Disasteroids:update(dt)
         self.ship.shooting = false
     end
 
+    --update the player
     self.ship:update(dt)
     return
 end
