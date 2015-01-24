@@ -1,16 +1,20 @@
+Class = require 'src.third_party.hump.class' -- `Class' is now a shortcut to new()
+
 function love.load()
     -- love calls this once, on game startup.
     -- this is the place to load resources, initialize variables, etc.
 
     -- 1. load required files.
     require 'src.third_party.HardonCollider.class'
-    require 'src.disasteroids'
+    Disasteroids = require 'src.disasteroids'
 
     -- 2. initialize global variables.
     gameIsPaused = false
     midpointX = love.graphics.getWidth()/2
     midpointY = love.graphics.getHeight()/2
     minigame = Disasteroids(midpointX, midpointY, true) -- TODO move to minigame startup
+    print(minigame.isActive)
+    print(minigame)
 
     -- TODO
 end
@@ -22,6 +26,7 @@ function love.update(dt)
     if gameIsPaused then
         return
     end
+    minigame:update(dt)
     -- TODO
 end
 
@@ -33,6 +38,7 @@ function love.draw()
         love.graphics.print("Game Paused", midpointX - 45, midpointY - 50)
         return -- TODO maybe don't return? instead, print this last?
     end
+    minigame:draw()
     -- TODO
 end
 

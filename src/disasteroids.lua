@@ -1,11 +1,33 @@
 -- this is where the logic for the disasteroids minigame will go.
-Class = require 'src.third_party.HardonCollider.class'
-require 'src.spaceship'
+local Class = require 'src.third_party.hump.class'
+local Ship = require 'src.spaceship'
 
-Disasteroids = Class {
-    init = function(midpointX, midpointY, isActive)
-        self.isActive = isActive
-        -- start the spaceship in the center of the screen
-        self.ship = Spaceship(midpointX, midpointY)
+local Disasteroids = Class{}
+
+function Disasteroids:init(midpointX, midpointY, isActive)
+    self.isActive = isActive
+    -- start the spaceship in the center of the screen
+    self.ship = Ship(midpointX, midpointY)
+    print(self.ship)
+end
+
+function Disasteroids:update(dt)
+    print(dt)
+    if love.keyboard.isDown( "a" ) then 
+        self.ship:turn("left")
+    elseif love.keyboard.isDown( "d" ) then
+        self.ship:turn("right")
     end
-}
+    if love.keyboard.isDown("w") then 
+        self.ship:accelerate()
+    end
+
+    self.ship:update(dt)
+    return
+end
+
+function Disasteroids:draw()
+    self.ship:draw()
+end
+
+return Disasteroids

@@ -1,23 +1,22 @@
 --
 -- SPACESHIP LOGIC
 --
-Class = require 'src.third_party.HardonCollider.class'
+local Class = require 'src.third_party.hump.class'
+local Vector = require 'src.third_party.hump.vector'
+local Spaceship = Class {}
 
-Spaceship = Class {
-    init = function(x, y)
-        self.angle = 0
-        self.speed = 0
-        self.xpos = x
-        self.ypos = y
-    end
-}
+function Spaceship:init(x, y)
+    self.angle = 0
+    self.speed = Vector(0,0)
+    self.pos = Vector(x,y)
+end
 
 function Spaceship:turn(direction)
     -- calculate new angle and update xpos, ypos.
     if direction == 'left' then
-        self.angle = (self.angle - 2) % 360
+        self.angle = (self.angle - .1) 
     elseif direction == 'right' then
-        self.angle = (self.angle + 2) % 360
+        self.angle = (self.angle + .1) --TODO limit by pi
     else
         print('error: ship cannot turn in direction ' + direction)
     end
@@ -27,7 +26,7 @@ function Spaceship:accelerate()
     -- when the user presses 'w' the spaceship gains speed up to maxSpeed.
     local maxSpeed = 5 -- remember that speed degrades each move.
     local speedUp = 1
-    self.speed = math.min(self.speed + speedUp, maxSpeed)
+    self.speed = self.speed + Vector(1,0):rotated(self.angle)
 end
 
 function Spaceship:decelerate()
@@ -46,7 +45,31 @@ function Spaceship:move()
     self.speed = math.max(self.speed - 1, 0) -- speed degrades each move until zero.
 end
 
+function Spaceship:update(dt)
+    --updates the ship's speed * the time delta
+    self.pos = self.pos + self.speed * dt
+end
+
+
 function Spaceship:location()
     -- return xpos, ypos, angle for rendering purposes.
-    return self.xpos, self.ypos, self.angle
+    return self.pos.x, self.pos.y, self.angle
 end
+
+--
+-- Rendering functions
+--
+function Spaceship:draw()
+    -- return xpos, ypos, angle for rendering purposes.
+    local len = 30
+    local frontX = math.cos(self.angle) * len
+    local frontY = math.sin(self.angle) * len
+
+    love.graphics.setColor(255,255,255)
+    love.graphics.line(self.pos.x, self.pos.y, self.pos.x + frontX, self.pos.y +  frontY)
+    love.graphics.setColor(255,0,0)
+    love.graphics.setPointSize(20)
+    love.graphics.point(self.pos.x, self.pos.y)
+end
+
+return Spaceship
