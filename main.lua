@@ -1,4 +1,5 @@
 Class = require 'src.third_party.hump.class' -- `Class' is now a shortcut to new()
+Disasteroids = require 'src.disasteroids'
 
 function love.load()
     -- love calls this once, on game startup.
@@ -6,7 +7,8 @@ function love.load()
 
     -- 1. load required files.
     require 'src.third_party.HardonCollider.class'
-    Disasteroids = require 'src.disasteroids'
+    ShipPic = love.graphics.newImage('res/shipbase.gif')
+    ShipQuad = love.graphics.newQuad(0,0,100,100,ShipPic:getDimensions())
 
     -- 2. initialize global variables.
     gameIsPaused = false

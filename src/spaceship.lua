@@ -41,7 +41,6 @@ function Spaceship:move()
     -- update speed, xpos, ypos as appropriate.
 
     -- TODO ship should move: update x and y coordinates.
-
     self.speed = math.max(self.speed - 1, 0) -- speed degrades each move until zero.
 end
 
@@ -60,16 +59,8 @@ end
 -- Rendering functions
 --
 function Spaceship:draw()
-    -- return xpos, ypos, angle for rendering purposes.
-    local len = 30
-    local frontX = math.cos(self.angle) * len
-    local frontY = math.sin(self.angle) * len
-
-    love.graphics.setColor(255,255,255)
-    love.graphics.line(self.pos.x, self.pos.y, self.pos.x + frontX, self.pos.y +  frontY)
-    love.graphics.setColor(255,0,0)
-    love.graphics.setPointSize(20)
-    love.graphics.point(self.pos.x, self.pos.y)
+    print(self.pos)
+    love.graphics.draw(ShipPic, ShipQuad, self.pos.x, self.pos.y, self.angle+math.pi/2, 1,1, 50, 50)
 end
 
 return Spaceship

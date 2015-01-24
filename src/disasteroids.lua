@@ -8,11 +8,9 @@ function Disasteroids:init(midpointX, midpointY, isActive)
     self.isActive = isActive
     -- start the spaceship in the center of the screen
     self.ship = Ship(midpointX, midpointY)
-    print(self.ship)
 end
 
 function Disasteroids:update(dt)
-    print(dt)
     if love.keyboard.isDown( "a" ) then 
         self.ship:turn("left")
     elseif love.keyboard.isDown( "d" ) then
