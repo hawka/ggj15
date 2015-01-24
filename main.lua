@@ -6,9 +6,12 @@ function love.load()
     -- this is the place to load resources, initialize variables, etc.
 
     -- 1. load required files.
-    require 'src.third_party.HardonCollider.class'
-    ShipPic = love.graphics.newImage('res/shipbase.gif')
-    ShipQuad = love.graphics.newQuad(0,0,100,100,ShipPic:getDimensions())
+    -- IMAGES
+    ShipBasePic = love.graphics.newImage('res/shipbase.gif')
+    ShipMovePic = love.graphics.newImage('res/shipmove.gif')
+    ShipShootPic = love.graphics.newImage('res/shipshoot.gif')
+
+    ShipQuad = love.graphics.newQuad(0, 0, 100, 100, ShipBasePic:getDimensions())
 
     -- 2. initialize global variables.
     gameIsPaused = false
@@ -28,20 +31,22 @@ function love.update(dt)
     if gameIsPaused then
         return
     end
-    minigame:update(dt)
-    -- TODO
+
+    if minigame.isActive then
+        minigame:update(dt)
+    end
 end
 
 function love.draw()
     -- love calls this continuously.
     -- this is where all the drawing happens.
     -- all love.graphics functions need to be called from within this function.
+    if minigame.isActive then
+        minigame:draw()
+    end
     if gameIsPaused then
         love.graphics.print("Game Paused", midpointX - 45, midpointY - 50)
-        return -- TODO maybe don't return? instead, print this last?
     end
-    minigame:draw()
-    -- TODO
 end
 
 function love.mousepressed(x, y, button)
@@ -52,18 +57,10 @@ function love.mousereleased(x, y, button)
     -- this is called whenever the mouse is released.
 end
 
-function love.keypressed(key)
+function love.keypressed(key, isrepeat)
     -- this is called whenever a key is pressed.
     if key == 'p' then
         gameIsPaused = not gameIsPaused
-    elseif key == 'a' and minigame.active then
-        -- TODO spaceship.turn('left')
-    elseif key == 'd' and minigame.active then
-        -- TODO spaceship.turn('right')
-    elseif key == 'w' and minigame.active then
-        -- TODO
-    elseif key == 's' and minigame.active then
-        -- TODO
     end
 end
 

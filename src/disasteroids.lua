@@ -11,13 +11,25 @@ function Disasteroids:init(midpointX, midpointY, isActive)
 end
 
 function Disasteroids:update(dt)
-    if love.keyboard.isDown( "a" ) then 
+    self.ship.thrustersOn = false
+
+    if love.keyboard.isDown( "a" ) then
         self.ship:turn("left")
     elseif love.keyboard.isDown( "d" ) then
         self.ship:turn("right")
     end
-    if love.keyboard.isDown("w") then 
+
+    if love.keyboard.isDown("w") then
+        self.ship.thrustersOn = true
         self.ship:accelerate()
+    elseif love.keyboard.isDown("s") then
+        self.ship:decelerate()
+    end
+
+    if love.keyboard.isDown(" ") then
+        self.ship.shooting = true
+    else
+        self.ship.shooting = false
     end
 
     self.ship:update(dt)
