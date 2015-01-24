@@ -20,7 +20,11 @@ function Disasteroids:update(dt)
     end
 
     if love.keyboard.isDown("w") then
-        self.ship.thrustersOn = true
+        if not self.ship.thrustersOn or self.ship.thrustersOn == 3 then
+            self.ship.thrustersOn = 1
+        else
+            self.ship.thrustersOn = self.ship.thrustersOn + 1
+        end
         self.ship:accelerate()
     elseif love.keyboard.isDown("s") then
         self.ship:decelerate()

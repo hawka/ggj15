@@ -1,4 +1,4 @@
--- 
+--
 -- base logic for all game entities
 --
 local Class = require 'src.third_party.hump.class'
@@ -13,7 +13,7 @@ function Movable:init(x,y)
     self.pos = Vector(x,y)
 end
 
-function Movable:wrap(minX, maxX, minY, maxY) 
+function Movable:wrap(minX, maxX, minY, maxY)
     -- wraps Movable around the screen when bounds are exceeded
     if self.pos.x < minX then
         self.pos.x = maxX - (minX - self.pos.x)
