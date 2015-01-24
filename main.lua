@@ -14,6 +14,10 @@ function love.load()
 
     ShipQuad = love.graphics.newQuad(0, 0, 66, 60, ShipBasePic:getDimensions())
 
+    AsteroidLargePic = love.graphics.newImage('res/asteroids/asteroidlarge.gif')
+    AsteroidQuad = love.graphics.newQuad(0, 0, 100, 100, AsteroidLargePic:getDimensions())
+
+
     -- 2. initialize global variables.
     gameIsPaused = false
     midpointX = love.graphics.getWidth()/2
