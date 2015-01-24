@@ -3,14 +3,14 @@ function love.load()
     -- this is the place to load resources, initialize variables, etc.
 
     -- 1. load required files.
+    require 'src.third_party.HardonCollider.class'
     require 'src.disasteroids'
 
     -- 2. initialize global variables.
     gameIsPaused = false
     midpointX = love.graphics.getWidth()/2
     midpointY = love.graphics.getHeight()/2
-    disasteroidsActive = true -- TODO switch to false
-    diasteroidsInit(midpointX, midpointY) -- TODO move to minigame startup
+    minigame = Disasteroids(midpointX, midpointY, true) -- TODO move to minigame startup
 
     -- TODO
 end
@@ -48,13 +48,13 @@ function love.keypressed(key)
     -- this is called whenever a key is pressed.
     if key == 'p' then
         gameIsPaused = not gameIsPaused
-    elseif key == 'a' and disasteroidsActive then
-        spaceshipTurn('left')
-    elseif key == 'd' and disasteroidsActive then
-        spaceshipTurn('right')
-    elseif key == 'w' and disasteroidsActive then
+    elseif key == 'a' and minigame.active then
+        -- TODO spaceship.turn('left')
+    elseif key == 'd' and minigame.active then
+        -- TODO spaceship.turn('right')
+    elseif key == 'w' and minigame.active then
         -- TODO
-    elseif key == 's' and diasteroidsActive then
+    elseif key == 's' and minigame.active then
         -- TODO
     end
 end
