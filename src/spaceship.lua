@@ -49,15 +49,18 @@ end
 -- Rendering functions
 --
 function Spaceship:draw()
-    if self.thrustersOn then
-        love.graphics.draw(ShipMovePic, ShipQuad, self.pos.x, self.pos.y,
-                           self.angle+math.pi/2, 1, 1, 50, 50)
-    elseif self.shooting then
-        love.graphics.draw(ShipShootPic, ShipQuad, self.pos.x, self.pos.y,
-                           self.angle+math.pi/2, 1, 1, 50, 50)
+    if self.thrustersOn == 1 then
+        love.graphics.draw(ShipMove1Pic, ShipQuad, self.pos.x, self.pos.y,
+                           self.angle+math.pi/2, 1, 1, 33, 30)
+    elseif self.thrustersOn == 2 then
+        love.graphics.draw(ShipMove2Pic, ShipQuad, self.pos.x, self.pos.y,
+                           self.angle+math.pi/2, 1, 1, 33, 30)
+    elseif self.thrustersOn == 3 then
+        love.graphics.draw(ShipMove2Pic, ShipQuad, self.pos.x, self.pos.y,
+                           self.angle+math.pi/2, 1, 1, 33, 30)
     else
         love.graphics.draw(ShipBasePic, ShipQuad, self.pos.x, self.pos.y,
-                           self.angle+math.pi/2, 1, 1, 50, 50)
+                           self.angle+math.pi/2, 1, 1, 33, 30)
     end
 end
 

@@ -7,11 +7,12 @@ function love.load()
 
     -- 1. load required files.
     -- IMAGES
-    ShipBasePic = love.graphics.newImage('res/shipbase.gif')
-    ShipMovePic = love.graphics.newImage('res/shipmove.gif')
-    ShipShootPic = love.graphics.newImage('res/shipshoot.gif')
+    ShipBasePic = love.graphics.newImage('res/ship/base.gif')
+    ShipMove1Pic = love.graphics.newImage('res/ship/move1.gif')
+    ShipMove2Pic = love.graphics.newImage('res/ship/move2.gif')
+    ShipMove3Pic = love.graphics.newImage('res/ship/move2.gif')
 
-    ShipQuad = love.graphics.newQuad(0, 0, 100, 100, ShipBasePic:getDimensions())
+    ShipQuad = love.graphics.newQuad(0, 0, 66, 60, ShipBasePic:getDimensions())
 
     -- 2. initialize global variables.
     gameIsPaused = false
