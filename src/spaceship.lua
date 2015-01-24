@@ -4,7 +4,7 @@
 local Class = require 'src.third_party.hump.class'
 local Vector = require 'src.third_party.hump.vector'
 local Movable =  require 'src.movable'
-local Spaceship = Class {}
+local Spaceship = Class {Acl = 1.5}
 
 function Spaceship:init(x, y)
     self.body = Movable(x, y)
@@ -25,12 +25,12 @@ end
 
 function Spaceship:accelerate()
     -- when the user presses 'w' the spaceship gains speed up to maxSpeed.
-    self.body.speed = self.body.speed + Vector(1,0):rotated(self.body.angle)
+    self.body.speed = self.body.speed + Vector(Spaceship.Acl,0):rotated(self.body.angle)
 end
 
 function Spaceship:decelerate()
     -- when the user presses 's' the spaceship loses speed up down to 0.
-    self.body.speed = self.body.speed + Vector(1,0):rotated(self.body.angle+math.pi)
+    self.body.speed = self.body.speed + Vector(Spaceship.Acl,0):rotated(self.body.angle+math.pi)
 end
 
 function Spaceship:update(dt)

@@ -2,6 +2,7 @@
 local Class = require 'src.third_party.hump.class'
 local Ship = require 'src.spaceship'
 local Asteroid = require 'src.asteroid'
+local Stars = require 'src.stars'
 local Vector = require 'src.third_party.hump.vector'
 
 local Disasteroids = Class{}
@@ -9,6 +10,7 @@ local Disasteroids = Class{}
 function Disasteroids:init(midpointX, midpointY, isActive)
     self.isActive = isActive
     self.asteroids = {}
+    self.stars = Stars(100)
     table.insert(self.asteroids, Asteroid(3, 500, 500, Vector(10,20), .2))
     -- start the spaceship in the center of the screen
     self.ship = Ship(midpointX, midpointY)
@@ -40,6 +42,8 @@ function Disasteroids:update(dt)
         self.ship.shooting = false
     end
 
+    --update the bg
+    self.stars:update(dt)
     --update the player
     self.ship:update(dt)
     --update other entities
@@ -50,6 +54,7 @@ function Disasteroids:update(dt)
 end
 
 function Disasteroids:draw()
+    self.stars:draw()
     self.ship:draw()
     for k,v in pairs(self.asteroids) do
       v:draw()
