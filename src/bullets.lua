@@ -53,7 +53,7 @@ end
 function Bullet:init(x, y, angle, speed)
     self.body = Movable(x, y)
     self.body.angle = angle -- to account for ship angle
-    self.body.speed = speed + Vector(100, 0):rotated(self.body.angle)
+    self.body.speed = speed + Vector(200, 0):rotated(self.body.angle)
 end
 
 function Bullet:update(dt)

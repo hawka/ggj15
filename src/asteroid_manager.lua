@@ -17,7 +17,7 @@ function AsteroidManager:spawn(pVec)
         possiblePoint = newPointOnEdge()
         if not pointIsTooClose(pVec, possiblePoint) then break end
     end
-    speed = Vector(math.random(1,40), math.random(1,40))
+    speed = Vector(math.random(-40,40), math.random(-40,40))
     rotation = math.random() / 2
     return Asteroid(3, possiblePoint.x, possiblePoint.y, speed, rotation)
 end
@@ -40,7 +40,7 @@ function newPointOnEdge()
         if randBool then --top
             y = -30
         else --bottom
-            y = love.graphics.getHeight() + 30
+            y = love.graphics.getHeight() + 20
         end
     else
         y = randomY
@@ -66,7 +66,6 @@ function pointIsTooClose(pVec, aVec)
         return true
     end
     return false
-
 end
 
 return AsteroidManager
