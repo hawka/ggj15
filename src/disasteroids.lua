@@ -7,6 +7,7 @@ local Asteroid = require 'src.asteroid'
 local AsteroidManager = require 'src.asteroid_manager'
 local Stars = require 'src.stars'
 local Vector = require 'src.third_party.hump.vector'
+local Timer = require 'src.third_party.hump.timer'
 local BulletHandler = require 'src.bullets'
 local Collider = require 'src.third_party.hardoncollider'
 
@@ -60,6 +61,8 @@ function Disasteroids:init(midpointX, midpointY, isActive)
     -- set up bullet handling.
     self.bullethandler = BulletHandler()
     self.newBulletAvailable = true
+    self.timer = Timer.new()
+    self.timer.addPeriodic(1, function() self.asteroidManager:spawn(self.ship.body.pos) end)
 end
 
 function Disasteroids:update(dt)
@@ -67,6 +70,9 @@ function Disasteroids:update(dt)
     if self.ship.health < 1 then
         return
     end
+
+    --update timer functions
+    self.timer.update(dt)
 
     -- Check for collisions.
     collider:update(dt)
