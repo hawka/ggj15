@@ -19,12 +19,24 @@ end
 
 function UIHandler:draw()
     love.graphics.setFont(SmallFont)
-    love.graphics.print("Hull Integrity:  "..self.owner.ship.health, 10, love.graphics.getHeight() - 150)
-    love.graphics.print("Asteroids Destroyed:  "..self.owner.score, 10, love.graphics.getHeight() - 130)
+
+    local health = "Destroyed"
+    if self.owner.ship.health == 3 then
+        health = "Undamaged"
+    elseif self.owner.ship.health == 2 then
+        health = "Breach in Sector 3"
+    elseif self.owner.ship.health == 1 then
+        health = "Multiple Hull Breaches"
+    end
+
+    love.graphics.print("Hull Integrity:  "..health, 10, love.graphics.getHeight() - 150)
+
+    love.graphics.print("Asteroids Destroyed:  "..score, 10, love.graphics.getHeight() - 130)
+
     local numDisasters = 0
     for disaster,status in pairs(self.owner.disasters) do
         if status then
-            love.graphics.print("ETA for "..self.text[disaster]..":  "..status.."s",
+            love.graphics.print("ETA til "..self.text[disaster]..":  "..status.."s",
                                 10, love.graphics.getHeight() - 110 - numDisasters*20)
             numDisasters = numDisasters + 1
         end

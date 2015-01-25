@@ -32,6 +32,7 @@ function onCollision(dt, shape_one, shape_two)
             if not shape_one.owner.invincible then
                 shape_one.owner:hurt()
                 minigame.asteroidManager:destroyOrSplit(shape_two.owner)
+                collider:remove(shape_two)
             end
         end
     elseif shape_one.name == "asteroid" then
@@ -39,6 +40,7 @@ function onCollision(dt, shape_one, shape_two)
             if not shape_two.owner.invincible then
                 shape_two.owner:hurt()
                 minigame.asteroidManager:destroyOrSplit(shape_one.owner)
+                collider:remove(shape_one)
             end
         elseif shape_two.name == "bullet" then
             shape_two.owner:remove()
@@ -64,8 +66,6 @@ function Disasteroids:init(midpointX, midpointY, isActive)
     self.stars = Stars(100)
     -- start the spaceship in the center of the screen
     self.ship = Ship(midpointX, midpointY)
-    -- score refers to the number of asteroids destroyed
-    self.score = 0
     -- set up asteroids
     self.asteroids = {}
     self.asteroidManager = AsteroidManager()

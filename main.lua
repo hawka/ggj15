@@ -45,8 +45,8 @@ function love.load()
     midpointX = love.graphics.getWidth()/2
     midpointY = love.graphics.getHeight()/2
     minigame = Disasteroids(midpointX, midpointY, true) -- TODO move to minigame startup
-
-    -- TODO
+    -- number of asteroids destroyed
+    score = 0
 end
 
 function love.update(dt)

@@ -23,6 +23,7 @@ function AsteroidManager:destroyOrSplit(asteroid)
     self.asteroids[asteroid] = nil
     print(oldSize, body.pos)
     if oldSize == 0 then
+        score = score + 1
         return
     end
 
