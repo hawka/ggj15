@@ -146,7 +146,7 @@ function Cutscene:draw()
             love.graphics.print("2.) "..self.responses[2], 60, midpointY - 25)
             love.graphics.print("3.) "..self.responses[3], 60, midpointY - 10)
             love.graphics.print("[select reponse 1, 2, or 3]", 60, midpointY + 25)
-        else 
+        else
             love.graphics.print("R.I.P.", 60, midpointY + 25)
         end
         love.graphics.reset()
@@ -160,10 +160,8 @@ function Cutscene:update()
     elseif self.active and self.active >= 2.8 then
         self.active = 0.1
     end
-    -- TODO check for response selection (numbers)
-    -- TODO check for spacebar hit to end cutscene?
     if self.active and love.keyboard.isDown("1") or love.keyboard.isDown("2") or love.keyboard.isDown("3") then
-        if self.gameover then 
+        if self.gameover then
             return
         end
         self.active = false
