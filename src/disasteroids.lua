@@ -16,8 +16,10 @@ function onCollision(dt, shape_one, shape_two)
     -- Collider callback function.
     if shape_one.name == "bullet" then
         if shape_two.name == "asteroid" then
-            -- TODO knock asteroid down a peg
             shape_one.owner:remove()
+            minigame.asteroidManager:destroyOrSplit(shape_two.owner)
+            collider:remove(shape_one)
+            collider:remove(shape_two)
         end
     elseif shape_one.name == "ship" then
         if shape_two.name == "asteroid" then
@@ -29,8 +31,10 @@ function onCollision(dt, shape_one, shape_two)
             shape_two.owner.health = shape_two.owner.health - 1
             -- TODO get rid of asteroid
         elseif shape_two == "bullet" then
-            -- TODO knock asteroid down a peg
             shape_two.owner:remove()
+            minigame.asteroidManager:destroyOrSplit(shape_one.owner)
+            collider:remove(shape_one)
+            collider:remove(shape_two)
         end
     else
         print("unknown collision type: " + shape_one.name)
@@ -93,7 +97,6 @@ function Disasteroids:update(dt)
     if love.keyboard.isDown(" ") and self.newBulletAvailable then
         self.ship.shooting = true
         self.bullethandler:addBullet(self.ship:location())
-        self.asteroidManager:debugSplit() --TODO REMOVE ME
         self.newBulletAvailable = false
     elseif not love.keyboard.isDown(" ") then
         self.ship.shooting = false
@@ -117,8 +120,8 @@ end
 function Disasteroids:draw()
     self.stars:draw()
     self.bullethandler:draw()
-    self.ship:draw()
     self.asteroidManager:draw()
+    self.ship:draw()
 end
 
 return Disasteroids
