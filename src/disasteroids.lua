@@ -154,13 +154,13 @@ end
 
 function Disasteroids:draw()
     self.stars:draw()
-    self.ui:draw()
     self.bullethandler:draw()
     self.asteroidManager:draw()
     self.ship:draw()
     if self.cutscene and self.cutscene.active then
         self.cutscene:draw()
     end
+    self.ui:draw()
 end
 
 return Disasteroids
