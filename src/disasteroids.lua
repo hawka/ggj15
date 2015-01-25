@@ -8,11 +8,12 @@ local Vector = require 'src.third_party.hump.vector'
 local Timer = require 'src.third_party.hump.timer'
 require 'src.third_party.TEsound'
 
-local Ship = require 'src.spaceship'
 local Asteroid = require 'src.asteroid'
 local AsteroidManager = require 'src.asteroid_manager'
-local Stars = require 'src.stars'
 local BulletHandler = require 'src.bullets'
+local Cutscene = require 'src.cutscene'
+local Ship = require 'src.spaceship'
+local Stars = require 'src.stars'
 local UIHandler = require 'src.ui'
 
 local Disasteroids = Class{}
@@ -56,6 +57,7 @@ end
 
 function Disasteroids:init(midpointX, midpointY, isActive, numAsteroids)
     self.isActive = isActive
+    self.cutscene = Cutscene(self, nil)
     -- set up disaster table.
     -- disasters are mapped to false unless active.
     -- if active, they are mapped to seconds til fix.
@@ -87,6 +89,11 @@ end
 function Disasteroids:update(dt)
     -- Check for death.
     if self.ship.health < 1 then
+        return
+    end
+
+    if self.cutscene then
+        self.cutscene:update()
         return
     end
 
@@ -157,6 +164,7 @@ function Disasteroids:draw()
     self.bullethandler:draw()
     self.asteroidManager:draw()
     self.ship:draw()
+    self.cutscene:draw()
 end
 
 return Disasteroids
