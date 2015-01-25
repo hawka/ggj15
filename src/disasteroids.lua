@@ -13,6 +13,7 @@ local BulletHandler = require 'src.bullets'
 local UIHandler = require 'src.ui'
 
 local Disasteroids = Class{}
+local justCollided = 0
 
 function onCollision(dt, shape_one, shape_two)
     -- Collider callback function.
@@ -32,7 +33,7 @@ function onCollision(dt, shape_one, shape_two)
         if shape_two.name == "ship" then
             shape_two.owner.health = shape_two.owner.health - 1
             -- TODO get rid of asteroid
-        elseif shape_two == "bullet" then
+        elseif shape_two.name == "bullet" then
             shape_two.owner:remove()
             minigame.asteroidManager:destroyOrSplit(shape_one.owner)
             collider:remove(shape_one)
