@@ -5,6 +5,7 @@ local Class = require 'src.third_party.hump.class'
 local Vector = require 'src.third_party.hump.vector'
 local Movable =  require 'src.movable'
 local Collider = require 'src.third_party.hardoncollider'
+local Timer = require 'src.third_party.hump.timer'
 local Spaceship = Class { ACL = 1.5 }
 
 function Spaceship:init(x, y)
@@ -12,9 +13,30 @@ function Spaceship:init(x, y)
     self.thrustersOn = false
     self.shooting = false
     self.health = 3
+    self.invincible = false
+    self.invincibleTimer = Timer.new()
     self.collision = collider:addRectangle(x-26, y-33, 50, 64)
     self.collision.name = "ship"
     self.collision.owner = self
+end
+
+function Spaceship:hurt()
+    if self.invincible then
+        return --safe for now!
+    end
+
+    -- Hurt the ship. TODO--add sound
+    self.health = self.health - 1
+    if self.health > 0 then
+        self:makeInvincible(3)
+    end
+end
+
+function Spaceship:makeInvincible(sec)
+    -- make spaceship invincible for "sec" amount of time
+    self.invincible = true
+    self.invincibleTimer.clear() --in case we have one set already, override it
+    self.invincibleTimer.add(sec, function() self.invincible = false end)
 end
 
 function Spaceship:turn(direction)
@@ -43,6 +65,7 @@ function Spaceship:update(dt)
     self.body.pos = self.body.pos + self.body.speed * dt
     local padding = 25
     self.body:wrap(-padding, love.graphics.getWidth()+padding, -padding, love.graphics.getHeight()+padding)
+    self.invincibleTimer.update(dt)
     -- updates the collision object.
     self.collision:moveTo(self.body.pos.x, self.body.pos.y)
     self.collision:setRotation(self.body.angle)
@@ -73,11 +96,14 @@ function Spaceship:draw()
                                self.body.angle+math.pi/2, 1, 1, 40, 30)
             return
         end
-        self.health = self.health - 0.3
+        self.health = self.health - 0.3 --HACK THE PLANET XXX
         return
     end
 
     -- Deal with normal ship rendering.
+    if self.invincible then
+        love.graphics.setColor(255,200,200,150) --to show an invincible state (TODO?)
+    end
     if self.thrustersOn == 1 and self.shooting then
         love.graphics.draw(ShipMoveShoot1Pic, ShipQuad, self.body.pos.x, self.body.pos.y,
                            self.body.angle+math.pi/2, 1, 1, 33, 30)
@@ -104,6 +130,8 @@ function Spaceship:draw()
                            self.body.angle+math.pi/2, 1, 1, 33, 30)
     end
     self.collision:draw("line") -- TODO remove
+    --reset color
+    love.graphics.setColor(255,255,255,255)
 end
 
 return Spaceship

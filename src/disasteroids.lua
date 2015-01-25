@@ -18,6 +18,7 @@ local Disasteroids = Class{}
 local justCollided = 0
 
 function onCollision(dt, shape_one, shape_two)
+    --TODO CLEAN THIS
     -- Collider callback function.
     if shape_one.name == "bullet" then
         if shape_two.name == "asteroid" then
@@ -28,13 +29,17 @@ function onCollision(dt, shape_one, shape_two)
         end
     elseif shape_one.name == "ship" then
         if shape_two.name == "asteroid" then
-            shape_one.owner.health = shape_one.owner.health - 1
-            -- TODO get rid of asteroid
+            if not shape_one.owner.invincible then
+                shape_one.owner:hurt()
+                minigame.asteroidManager:destroyOrSplit(shape_two.owner)
+            end
         end
     elseif shape_one.name == "asteroid" then
         if shape_two.name == "ship" then
-            shape_two.owner.health = shape_two.owner.health - 1
-            -- TODO get rid of asteroid
+            if not shape_two.owner.invincible then
+                shape_two.owner:hurt()
+                minigame.asteroidManager:destroyOrSplit(shape_one.owner)
+            end
         elseif shape_two.name == "bullet" then
             shape_two.owner:remove()
             minigame.asteroidManager:destroyOrSplit(shape_one.owner)
