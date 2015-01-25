@@ -91,7 +91,7 @@ function love.update(dt)
 
         if disasterManager.readyToChange then
             disasterManager:newDisaster()
-            minigame:launchCutscene(minigame, disasterMangager.disaster)
+            minigame:launchCutscene(minigame, disasterManager.disaster)
         end
     elseif minigame.isActive and minigame.cutscene then
         minigame.cutscene:update()
