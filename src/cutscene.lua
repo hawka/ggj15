@@ -109,7 +109,7 @@ function Cutscene:init(game, disaster)
         self.responses[3] = "Great, a gunner that can't even shoot things properly. What use are you?"
         self.fourthText = "Captain, the cannons are back online. Good hunting."
     else
-        print("Invalid cutscene type: " + sceneType)
+        print("Invalid cutscene type: "..disaster)
     end
 end
 
