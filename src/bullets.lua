@@ -16,12 +16,12 @@ function BulletHandler:init()
     self.bullets = {}
 end
 
-function BulletHandler:addBullet(x, y, angle)
+function BulletHandler:addBullet(x, y, angle, speed)
     -- this actually adds two bullets, one for each gun
     local vecA = Vector(30, -20):rotated(angle + math.pi/2);
     local vecB = Vector(-30, -20):rotated(angle + math.pi/2);
-    bulletA = Bullet(x + vecA.x, y + vecA.y, angle)
-    bulletB = Bullet(x + vecB.x, y + vecB.y, angle)
+    bulletA = Bullet(x + vecA.x, y + vecA.y, angle, speed)
+    bulletB = Bullet(x + vecB.x, y + vecB.y, angle, speed)
     self.bullets[bulletA] = true
     self.bullets[bulletB] = true
 end
@@ -50,10 +50,10 @@ end
 -- BULLET CLASS
 --
 
-function Bullet:init(x, y, angle)
+function Bullet:init(x, y, angle, speed)
     self.body = Movable(x, y)
     self.body.angle = angle -- to account for ship angle
-    self.body.speed = Vector(70, 0):rotated(self.body.angle)
+    self.body.speed = speed + Vector(100, 0):rotated(self.body.angle)
 end
 
 function Bullet:update(dt)
