@@ -10,7 +10,11 @@ function love.load()
     ShipBasePic = love.graphics.newImage('res/ship/base.gif')
     ShipMove1Pic = love.graphics.newImage('res/ship/move1.gif')
     ShipMove2Pic = love.graphics.newImage('res/ship/move2.gif')
-    ShipMove3Pic = love.graphics.newImage('res/ship/move2.gif')
+    ShipMove3Pic = love.graphics.newImage('res/ship/move3.gif')
+    ShipShootPic = love.graphics.newImage('res/ship/shoot.gif')
+    ShipMoveShoot1Pic = love.graphics.newImage('res/ship/moveshoot1.gif')
+    ShipMoveShoot2Pic = love.graphics.newImage('res/ship/moveshoot2.gif')
+    ShipMoveShoot3Pic = love.graphics.newImage('res/ship/moveshoot3.gif')
 
     ShipQuad = love.graphics.newQuad(0, 0, 66, 60, ShipBasePic:getDimensions())
 

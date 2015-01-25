@@ -25,8 +25,14 @@ function Movable:wrap(minX, maxX, minY, maxY)
     elseif self.pos.y > maxY then
         self.pos.y = minY + (self.pos.y - maxY)
     end
-
 end
 
+function Movable:isOutsideBounds(minX, maxX, minY, maxY)
+    -- returns boolean if Movable is outside the bounds.
+    if self.pos.x < minX or self.pos.x > maxX or self.pos.y < minY or self.pos.y > maxY then
+        return true
+    end
+    return false
+end
 
 return Movable

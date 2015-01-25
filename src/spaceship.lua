@@ -37,7 +37,7 @@ function Spaceship:update(dt)
     --updates the ship's speed * the time delta
     self.body.pos = self.body.pos + self.body.speed * dt
     local padding = 25
-    self.body:wrap(-padding, love.graphics.getWidth()+padding, -padding,  love.graphics.getHeight()+padding)
+    self.body:wrap(-padding, love.graphics.getWidth()+padding, -padding, love.graphics.getHeight()+padding)
 end
 
 
@@ -50,14 +50,26 @@ end
 -- Rendering functions
 --
 function Spaceship:draw()
-    if self.thrustersOn == 1 then
+    if self.thrustersOn == 1 and self.shooting then
+        love.graphics.draw(ShipMoveShoot1Pic, ShipQuad, self.body.pos.x, self.body.pos.y,
+                           self.body.angle+math.pi/2, 1, 1, 33, 30)
+    elseif self.thrustersOn == 2 and self.shooting then
+        love.graphics.draw(ShipMoveShoot2Pic, ShipQuad, self.body.pos.x, self.body.pos.y,
+                           self.body.angle+math.pi/2, 1, 1, 33, 30)
+    elseif self.thrustersOn == 3 and self.shooting then
+        love.graphics.draw(ShipMoveShoot3Pic, ShipQuad, self.body.pos.x, self.body.pos.y,
+                           self.body.angle+math.pi/2, 1, 1, 33, 30)
+    elseif self.shooting then
+        love.graphics.draw(ShipShootPic, ShipQuad, self.body.pos.x, self.body.pos.y,
+                           self.body.angle+math.pi/2, 1, 1, 33, 30)
+    elseif self.thrustersOn == 1 then
         love.graphics.draw(ShipMove1Pic, ShipQuad, self.body.pos.x, self.body.pos.y,
                            self.body.angle+math.pi/2, 1, 1, 33, 30)
     elseif self.thrustersOn == 2 then
         love.graphics.draw(ShipMove2Pic, ShipQuad, self.body.pos.x, self.body.pos.y,
                            self.body.angle+math.pi/2, 1, 1, 33, 30)
     elseif self.thrustersOn == 3 then
-        love.graphics.draw(ShipMove2Pic, ShipQuad, self.body.pos.x, self.body.pos.y,
+        love.graphics.draw(ShipMove3Pic, ShipQuad, self.body.pos.x, self.body.pos.y,
                            self.body.angle+math.pi/2, 1, 1, 33, 30)
     else
         love.graphics.draw(ShipBasePic, ShipQuad, self.body.pos.x, self.body.pos.y,
