@@ -30,9 +30,10 @@ function DisasterManager:queueDisaster()
 end
 
 function DisasterManager:startCountdown()
-    local timetil = math.random(30,60)
+    local timetil = math.random(15,45)
     print("new disaster in...", timetil)
     self.readyToChange = false
+    self.timer.clear()
     self.timer.add(timetil, function() self.readyToChange = true end)
 end
 

@@ -55,7 +55,7 @@ function onCollision(dt, shape_one, shape_two)
     end
 end
 
-function Disasteroids:init(midpointX, midpointY, isActive, numAsteroids)
+function Disasteroids:init(midpointX, midpointY, isActive)
     self.isActive = isActive
     self.cutscene = Cutscene(self, nil)
     -- set up collider
@@ -65,20 +65,30 @@ function Disasteroids:init(midpointX, midpointY, isActive, numAsteroids)
     -- start the spaceship in the center of the screen
     self.ship = Ship(midpointX, midpointY)
     -- set up asteroids
+    self.round = 0
     self.asteroids = {}
     self.asteroidManager = AsteroidManager()
-    for i = 1,numAsteroids do
-        self.asteroidManager:spawn(self.ship.body.pos)
-    end
+
     -- set up bullet handling.
     self.bullethandler = BulletHandler()
     self.newBulletAvailable = true
-    -- set up timer.
+
+    -- set up spawner
     self.timer = Timer.new()
-    local spawnTime = math.random(3,10)/3
-    self.timer.addPeriodic(spawnTime, function() self.asteroidManager:spawn(self.ship.body.pos) end)
+    self:resetRound()
+
     -- set up ui.
     self.ui = UIHandler(self)
+end
+
+function Disasteroids:resetRound()
+    self.round = self.round + 1
+    for i = 1,(self.round + 3) do
+        self.asteroidManager:spawn(self.ship.body.pos)
+    end
+    local spawnTime = math.random(3,10)/3
+    self.timer.clear()
+    self.timer.addPeriodic(spawnTime, function() self.asteroidManager:spawn(self.ship.body.pos) end)
 end
 
 function Disasteroids:launchCutscene(disaster)

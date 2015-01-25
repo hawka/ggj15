@@ -65,6 +65,7 @@ function love.load()
     ExpSounds = {ExpSound1, ExpSound2, ExpSound3}
     LaserSound = "res/sfx/shoot.ogg"
     DeathSound = "res/sfx/death.ogg"
+    MenuSound = "res/sfx/menu.ogg"
 
     -- 2. initialize global variables.
     gameIsPaused = false
@@ -91,7 +92,9 @@ function love.update(dt)
 
         if disasterManager.readyToChange then
             disasterManager:newDisaster()
-            minigame:launchCutscene(minigame, disasterManager.disaster)
+            TEsound.play(MenuSound)
+            minigame:launchCutscene(disasterManager.disaster)
+            minigame:resetRound()
         end
     elseif minigame.isActive and minigame.cutscene then
         minigame.cutscene:update()
@@ -126,7 +129,9 @@ function love.keypressed(key, isrepeat)
     end
     if key == '0' and not minigame.cutscene then
         disasterManager:newDisaster()
+        TEsound.play(MenuSound)
         minigame:launchCutscene(disasterManager.disaster)
+        minigame:resetRound()
     end
 
 end
