@@ -20,7 +20,7 @@ function Asteroid:update(dt)
     -- updates the position and angle of the asteroid
     self.body.angle = self.body.angle + self.angularVelocity * dt
     self.body.pos = self.body.pos + self.body.speed * dt
-    local padding = 20 * self.size
+    local padding = 16 * self.size
     self.body:wrap(-padding, love.graphics.getWidth()+padding, -padding,  love.graphics.getHeight()+padding)
 end
 
