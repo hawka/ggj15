@@ -2,6 +2,9 @@
 -- this is where the logic for the disasteroids minigame will go.
 --
 local Class = require 'src.third_party.hump.class'
+local Vector = require 'src.third_party.hump.vector'
+local Collider = require 'src.third_party.hardoncollider'
+
 local Ship = require 'src.spaceship'
 local Asteroid = require 'src.asteroid'
 local AsteroidManager = require 'src.asteroid_manager'
@@ -9,9 +12,10 @@ local Stars = require 'src.stars'
 local Vector = require 'src.third_party.hump.vector'
 local Timer = require 'src.third_party.hump.timer'
 local BulletHandler = require 'src.bullets'
-local Collider = require 'src.third_party.hardoncollider'
+local UIHandler = require 'src.ui'
 
 local Disasteroids = Class{}
+local justCollided = 0
 
 function onCollision(dt, shape_one, shape_two)
     -- Collider callback function.
@@ -31,7 +35,7 @@ function onCollision(dt, shape_one, shape_two)
         if shape_two.name == "ship" then
             shape_two.owner.health = shape_two.owner.health - 1
             -- TODO get rid of asteroid
-        elseif shape_two == "bullet" then
+        elseif shape_two.name == "bullet" then
             shape_two.owner:remove()
             minigame.asteroidManager:destroyOrSplit(shape_one.owner)
             collider:remove(shape_one)

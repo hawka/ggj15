@@ -56,14 +56,14 @@ function Bullet:init(x, y, angle, speed)
     self.body = Movable(x, y)
     self.body.angle = angle -- to account for ship angle
     self.body.speed = speed + Vector(200, 0):rotated(self.body.angle)
-    self.collision = collider:addPoint(self.body.pos.x, self.body.pos.y)
+    self.collision = collider:addCircle(self.body.pos.x, self.body.pos.y, 3)
     self.collision.name = "bullet"
     self.collision.owner = self
 end
 
 function Bullet:update(dt)
     self.body.pos = self.body.pos + self.body.speed * dt
-    self.collision:moveTo(self.body.pos.x, self.body.pos.y)
+    self.collision:move(self.body.speed.x * dt, self.body.speed.y * dt)
 end
 
 function Bullet:draw()
