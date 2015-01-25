@@ -1,5 +1,6 @@
 Class = require 'src.third_party.hump.class' -- `Class' is now a shortcut to new()
 Disasteroids = require 'src.disasteroids'
+local DisasterManager = require 'src.disasters'
 
 -- for better random numbers
 math.randomseed( os.time() )
@@ -44,6 +45,7 @@ function love.load()
     gameIsPaused = false
     midpointX = love.graphics.getWidth()/2
     midpointY = love.graphics.getHeight()/2
+    disasterManager = DisasterManager()
     minigame = Disasteroids(midpointX, midpointY, true) -- TODO move to minigame startup
     -- number of asteroids destroyed
     score = 0
@@ -58,7 +60,13 @@ function love.update(dt)
     end
 
     if minigame.isActive then
+        disasterManager:update(dt)
         minigame:update(dt)
+
+        if disasterManager.readyToChange then
+            disasterManager:newDisaster()
+            print("AHHHHH", disasterManager.disaster)
+        end
     end
 end
 
@@ -88,6 +96,11 @@ function love.keypressed(key, isrepeat)
     if key == 'p' then
         gameIsPaused = not gameIsPaused
     end
+    if key == '0' then
+        disasterManager:newDisaster()
+        print("AHHHHH", disasterManager.disaster)
+    end
+
 end
 
 function love.keyreleased(key)

@@ -4,13 +4,13 @@
 local Class = require 'src.third_party.hump.class'
 local Vector = require 'src.third_party.hump.vector'
 local Collider = require 'src.third_party.hardoncollider'
+local Vector = require 'src.third_party.hump.vector'
+local Timer = require 'src.third_party.hump.timer'
 
 local Ship = require 'src.spaceship'
 local Asteroid = require 'src.asteroid'
 local AsteroidManager = require 'src.asteroid_manager'
 local Stars = require 'src.stars'
-local Vector = require 'src.third_party.hump.vector'
-local Timer = require 'src.third_party.hump.timer'
 local BulletHandler = require 'src.bullets'
 local UIHandler = require 'src.ui'
 
@@ -59,7 +59,6 @@ function Disasteroids:init(midpointX, midpointY, isActive)
     -- disasters are mapped to false unless active.
     -- if active, they are mapped to seconds til fix.
     self.disasters = {}
-    self:initializeDisasterTable()
     -- set up collider
     collider = Collider(100, onCollision)
     -- set up stars
@@ -79,19 +78,11 @@ function Disasteroids:init(midpointX, midpointY, isActive)
     self.newBulletAvailable = true
     -- set up timer.
     self.timer = Timer.new()
-    self.timer.addPeriodic(1, function() self.asteroidManager:spawn(self.ship.body.pos) end)
+    self.timer.addPeriodic(2, function() self.asteroidManager:spawn(self.ship.body.pos) end)
     -- set up ui.
     self.ui = UIHandler(self)
 end
 
-function Disasteroids:initializeDisasterTable()
-    self.disasters["nofuel"] = false
-    self.disasters["noslow"] = false
-    self.disasters["turnleft"] = false
-    self.disasters["turnright"] = false
-    self.disasters["controlswap"] = false -- TODO
-    self.disasters["gunproblem"] = false -- TODO
-end
 
 function Disasteroids:update(dt)
     -- Check for death.
@@ -106,22 +97,29 @@ function Disasteroids:update(dt)
     collider:update(dt)
 
     -- Deal with turning.
-    -- if self.disasters["controlswap"]
-    if love.keyboard.isDown( "a" ) and not self.disasters["turnleft"] then
-        self.ship:turn("left")
-    elseif love.keyboard.isDown( "d" ) and not self.disasters["turnright"] then
-        self.ship:turn("right")
+    -- if disasterManager:is("controlswap")
+    if love.keyboard.isDown( "a" ) and (not disasterManager:is("turnleft") and
+            not disasterManager:is("controlswap")) or
+            love.keyboard.isDown( "d" ) and (disasterManager:is("turnright") or
+            disasterManager:is("controlswap")) then
+                self.ship:turn("left")
+    elseif love.keyboard.isDown( "d" ) and (not disasterManager:is("turnright") and
+            not disasterManager:is("controlswap")) or
+            love.keyboard.isDown( "a" ) and (disasterManager:is("turnleft") or
+            disasterManager:is("controlswap")) then
+                self.ship:turn("right")
     end
 
     -- Deal with acceleration.
-    if love.keyboard.isDown("w") and not self.disasters["nofuel"] then
-        if not self.ship.thrustersOn or self.ship.thrustersOn == 3 then
-            self.ship.thrustersOn = 1
-        else
-            self.ship.thrustersOn = self.ship.thrustersOn + 1
-        end
-        self.ship:accelerate()
-    elseif love.keyboard.isDown("s") and not self.disasters["noslow"] then
+    if disasterManager:is("noslow") or
+        (love.keyboard.isDown("w") and not disasterManager:is("nofuel")) then
+            if not self.ship.thrustersOn or self.ship.thrustersOn == 3 then
+                self.ship.thrustersOn = 1
+            else
+                self.ship.thrustersOn = self.ship.thrustersOn + 1
+            end
+            self.ship:accelerate()
+    elseif love.keyboard.isDown("s") and not disasterManager:is("noslow") then
         self.ship:decelerate()
         self.ship.thrustersOn = false
     else

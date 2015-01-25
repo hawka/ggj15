@@ -21,7 +21,6 @@ function AsteroidManager:destroyOrSplit(asteroid)
     local body = asteroid.body
     local oldSize = asteroid.size
     self.asteroids[asteroid] = nil
-    print(oldSize, body.pos)
     if oldSize == 0 then
         score = score + 1
         return
@@ -30,7 +29,7 @@ function AsteroidManager:destroyOrSplit(asteroid)
     -- else, we can split!
     local newSize = oldSize - 1
     -- TODO awful magic numbers
-    local newSpeed1 =  Vector(math.random(-body.speed.x,body.speed.x), math.random(-body.speed.x,body.speed.x))
+    local newSpeed1 =  Vector(math.random(-body.speed.x*1.5,body.speed.x*1.5), math.random(-body.speed.x*1.5,1.5*body.speed.x))
     local newSpeed2 = body.speed - newSpeed1
     local magic = oldSize*10
     new1 = Asteroid(newSize,
@@ -64,7 +63,7 @@ function AsteroidManager:new(pVec)
         possiblePoint = newPointOnEdge()
         if not pointIsTooClose(pVec, possiblePoint) then break end
     end
-    speed = Vector(math.random(-40,40), math.random(-40,40))
+    speed = Vector(math.random(-80,80), math.random(-80,80))
     rotation = math.random() / 2
     return Asteroid(2, possiblePoint.x, possiblePoint.y, speed, rotation)
 end

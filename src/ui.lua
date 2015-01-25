@@ -15,6 +15,7 @@ function UIHandler:init(game)
     self.text["turnright"] = "Right Engine Retuned"
     self.text["controlswap"] = "Life Support Restored"
     self.text["gunproblem"] = "Cannon Malfunction Fixed"
+    self.text["sensors"] = "Sensors Back Online"
 end
 
 function UIHandler:draw()

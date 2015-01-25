@@ -22,10 +22,23 @@ function BulletHandler:addBullet(x, y, angle, speed)
     -- this actually adds two bullets, one for each gun
     local vecA = Vector(30, -20):rotated(angle + math.pi/2);
     local vecB = Vector(-30, -20):rotated(angle + math.pi/2);
-    bulletA = Bullet(x + vecA.x, y + vecA.y, angle, speed)
-    bulletB = Bullet(x + vecB.x, y + vecB.y, angle, speed)
-    self.bullets[bulletA] = true
-    self.bullets[bulletB] = true
+    if not disasterManager:is("gunproblem") then
+        bulletA = Bullet(x + vecA.x, y + vecA.y, angle, speed)
+        self.bullets[bulletA] = true
+        bulletB = Bullet(x + vecB.x, y + vecB.y, angle, speed)
+        self.bullets[bulletB] = true
+        return
+    end
+
+    --else, there's a gun problem -- we have a 50% chance of firing
+    if randBool() then
+        bulletA = Bullet(x + vecA.x, y + vecA.y, angle, speed)
+        self.bullets[bulletA] = true
+    end
+    if randBool() then
+        bulletB = Bullet(x + vecB.x, y + vecB.y, angle, speed)
+        self.bullets[bulletB] = true
+    end
 end
 
 function BulletHandler:update(dt)
