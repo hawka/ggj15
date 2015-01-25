@@ -53,12 +53,19 @@ end
 
 function Disasteroids:init(midpointX, midpointY, isActive)
     self.isActive = isActive
+    -- set up disaster table.
+    -- disasters are mapped to false unless active.
+    -- if active, they are mapped to seconds til fix.
+    self.disasters = {}
+    self:initializeDisasterTable()
     -- set up collider
     collider = Collider(100, onCollision)
     -- set up stars
     self.stars = Stars(100)
     -- start the spaceship in the center of the screen
     self.ship = Ship(midpointX, midpointY)
+    -- score refers to the number of asteroids destroyed
+    self.score = 0
     -- set up asteroids
     self.asteroids = {}
     self.asteroidManager = AsteroidManager()
@@ -70,8 +77,20 @@ function Disasteroids:init(midpointX, midpointY, isActive)
     -- set up bullet handling.
     self.bullethandler = BulletHandler()
     self.newBulletAvailable = true
+    -- set up timer.
     self.timer = Timer.new()
     self.timer.addPeriodic(1, function() self.asteroidManager:spawn(self.ship.body.pos) end)
+    -- set up ui.
+    self.ui = UIHandler(self)
+end
+
+function Disasteroids:initializeDisasterTable()
+    self.disasters["nofuel"] = false
+    self.disasters["noslow"] = false
+    self.disasters["turnleft"] = false
+    self.disasters["turnright"] = false
+    self.disasters["controlswap"] = false -- TODO
+    self.disasters["gunproblem"] = false -- TODO
 end
 
 function Disasteroids:update(dt)
@@ -87,21 +106,22 @@ function Disasteroids:update(dt)
     collider:update(dt)
 
     -- Deal with turning.
-    if love.keyboard.isDown( "a" ) then
+    -- if self.disasters["controlswap"]
+    if love.keyboard.isDown( "a" ) and not self.disasters["turnleft"] then
         self.ship:turn("left")
-    elseif love.keyboard.isDown( "d" ) then
+    elseif love.keyboard.isDown( "d" ) and not self.disasters["turnright"] then
         self.ship:turn("right")
     end
 
     -- Deal with acceleration.
-    if love.keyboard.isDown("w") then
+    if love.keyboard.isDown("w") and not self.disasters["nofuel"] then
         if not self.ship.thrustersOn or self.ship.thrustersOn == 3 then
             self.ship.thrustersOn = 1
         else
             self.ship.thrustersOn = self.ship.thrustersOn + 1
         end
         self.ship:accelerate()
-    elseif love.keyboard.isDown("s") then
+    elseif love.keyboard.isDown("s") and not self.disasters["noslow"] then
         self.ship:decelerate()
         self.ship.thrustersOn = false
     else
@@ -134,6 +154,7 @@ end
 
 function Disasteroids:draw()
     self.stars:draw()
+    self.ui:draw()
     self.bullethandler:draw()
     self.asteroidManager:draw()
     self.ship:draw()

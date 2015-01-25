@@ -35,6 +35,11 @@ function love.load()
     AsteroidSmallPic = love.graphics.newImage('res/asteroids/asteroidsmall.gif')
     AsteroidSmallQuad = love.graphics.newQuad(0, 0, 42, 42, AsteroidSmallPic:getDimensions())
 
+    -- FONTS
+    love.graphics.setDefaultFilter("nearest", "nearest")
+    HeaderFont = love.graphics.newFont('res/fonts/Jura-DemiBold.ttf', 40)
+    SmallFont = love.graphics.newFont('res/fonts/Jura-DemiBold.ttf', 20)
+
     -- 2. initialize global variables.
     gameIsPaused = false
     midpointX = love.graphics.getWidth()/2
@@ -65,7 +70,8 @@ function love.draw()
         minigame:draw()
     end
     if gameIsPaused then
-        love.graphics.print("Game Paused", midpointX - 45, midpointY - 50)
+        love.graphics.setFont(SmallFont)
+        love.graphics.print("( Game Paused )", midpointX - 90, midpointY - 50)
     end
 end
 

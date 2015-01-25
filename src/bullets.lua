@@ -79,6 +79,7 @@ function Bullet:remove()
     -- on the next call to update. Make sure no asteroids ever go this far.
     self.body.pos = Vector(-500, -500)
     self.body.speed = Vector(0, 0)
+    collider:remove(self.collision)
 end
 
 return BulletHandler
