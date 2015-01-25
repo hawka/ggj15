@@ -16,6 +16,34 @@ function AsteroidManager:spawn(playerPos)
     self.asteroids[a] = a -- hack??
 end
 
+function AsteroidManager:destroyOrSplit(asteroid)
+    -- destroy an asteroid and create 2 smaller ones, if possible
+    local body = asteroid.body
+    local oldSize = asteroid.size
+    self.asteroids[asteroid] = nil
+    print(oldSize, body.pos)
+    if oldSize == 0 then
+        return
+    end
+
+    -- else, we can split!
+    local newSize = oldSize - 1
+    -- TODO awful magic numbers
+    local newSpeed1 =  Vector(math.random(-body.speed.x,body.speed.x), math.random(-body.speed.x,body.speed.x))
+    local newSpeed2 = body.speed - newSpeed1
+    local magic = radius(oldSize)
+    new1 = Asteroid(newSize,
+        body.pos.x + math.random(-magic,magic),
+        body.pos.y + math.random(-magic,magic),
+        newSpeed1, rotation + math.random())
+    self.asteroids[new1] = new1 
+    new2 = Asteroid(newSize,
+        body.pos.x + math.random(-magic,magic),
+        body.pos.y + math.random(-magic,magic),
+        newSpeed2, rotation + math.random())
+    self.asteroids[new2] = new2 
+end
+
 function AsteroidManager:update(dt)
     for k,v in pairs(self.asteroids) do
       v:update(dt)
@@ -84,6 +112,15 @@ function pointIsTooClose(pVec, aVec)
         return true
     end
     return false
+end
+
+
+function AsteroidManager:debugSplit()
+--TODO this is a DEBUG function for splitting a single asteroid
+for k,v in pairs(self.asteroids) do
+    self:destroyOrSplit(v)
+    break
+end
 end
 
 return AsteroidManager

@@ -14,6 +14,7 @@ local Disasteroids = Class{}
 
 function onCollision(dt, shape_one, shape_two)
     -- Collider callback function.
+<<<<<<< HEAD
     if shape_one.name == "bullet" then
         if shape_two.name == "asteroid" then
             -- TODO knock asteroid down a peg
@@ -35,6 +36,10 @@ function onCollision(dt, shape_one, shape_two)
     else
         print("unknown collision type: " + shape_one.name)
     end
+=======
+    --print("bang!")
+    -- TODO
+>>>>>>> Split working on a non-visual level
 end
 
 function Disasteroids:init(midpointX, midpointY, isActive)
@@ -93,6 +98,7 @@ function Disasteroids:update(dt)
     if love.keyboard.isDown(" ") and self.newBulletAvailable then
         self.ship.shooting = true
         self.bullethandler:addBullet(self.ship:location())
+        self.asteroidManager:debugSplit() --TODO REMOVE ME
         self.newBulletAvailable = false
     elseif not love.keyboard.isDown(" ") then
         self.ship.shooting = false
