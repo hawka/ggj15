@@ -128,9 +128,10 @@ function Cutscene:draw()
         love.graphics.print(self.secondText, 150, midpointY - 145)
         love.graphics.print(self.thirdText, 150, midpointY - 130)
         love.graphics.setColor(255, 255, 255, 255)
-        love.graphics.print("> "..self.responses[1], 60, midpointY - 40)
-        love.graphics.print("> "..self.responses[2], 60, midpointY - 25)
-        love.graphics.print("> "..self.responses[3], 60, midpointY - 10)
+        love.graphics.print("1.) "..self.responses[1], 60, midpointY - 40)
+        love.graphics.print("2.) "..self.responses[2], 60, midpointY - 25)
+        love.graphics.print("3.) "..self.responses[3], 60, midpointY - 10)
+        love.graphics.print("[select reponse 1, 2, or 3]", 60, midpointY + 25)
         love.graphics.reset()
     end
 end
@@ -144,7 +145,7 @@ function Cutscene:update()
     end
     -- TODO check for response selection (numbers)
     -- TODO check for spacebar hit to end cutscene?
-    if self.active and love.keyboard.isDown(" ") then
+    if self.active and love.keyboard.isDown("1") or love.keyboard.isDown("2") or love.keyboard.isDown("3") then
         self.active = false
         self.owner.cutscene = nil
     end
