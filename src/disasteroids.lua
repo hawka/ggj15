@@ -14,7 +14,6 @@ local Disasteroids = Class{}
 
 function onCollision(dt, shape_one, shape_two)
     -- Collider callback function.
-<<<<<<< HEAD
     if shape_one.name == "bullet" then
         if shape_two.name == "asteroid" then
             -- TODO knock asteroid down a peg
@@ -36,10 +35,6 @@ function onCollision(dt, shape_one, shape_two)
     else
         print("unknown collision type: " + shape_one.name)
     end
-=======
-    --print("bang!")
-    -- TODO
->>>>>>> Split working on a non-visual level
 end
 
 function Disasteroids:init(midpointX, midpointY, isActive)
