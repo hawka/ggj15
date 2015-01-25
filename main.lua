@@ -24,14 +24,11 @@ function love.load()
     AsteroidLargePic = love.graphics.newImage('res/asteroids/asteroidlarge.gif')
     AsteroidQuad = love.graphics.newQuad(0, 0, 100, 100, AsteroidLargePic:getDimensions())
 
-
     -- 2. initialize global variables.
     gameIsPaused = false
     midpointX = love.graphics.getWidth()/2
     midpointY = love.graphics.getHeight()/2
     minigame = Disasteroids(midpointX, midpointY, true) -- TODO move to minigame startup
-    print(minigame.isActive)
-    print(minigame)
 
     -- TODO
 end

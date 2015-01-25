@@ -4,12 +4,15 @@
 local Class = require 'src.third_party.hump.class'
 local Vector = require 'src.third_party.hump.vector'
 local Movable =  require 'src.movable'
-local Spaceship = Class {Acl = 1.5}
+local Collider = require 'src.third_party.hardoncollider'
+local Spaceship = Class { ACL = 1.5 }
 
 function Spaceship:init(x, y)
     self.body = Movable(x, y)
     self.thrustersOn = false
     self.shooting = false
+    self.health = 3
+    self.collision = collider:addRectangle(x-26, y-33, 50, 64)
 end
 
 function Spaceship:turn(direction)
@@ -25,12 +28,12 @@ end
 
 function Spaceship:accelerate()
     -- when the user presses 'w' the spaceship gains speed up to maxSpeed.
-    self.body.speed = self.body.speed + Vector(Spaceship.Acl,0):rotated(self.body.angle)
+    self.body.speed = self.body.speed + Vector(Spaceship.ACL,0):rotated(self.body.angle)
 end
 
 function Spaceship:decelerate()
     -- when the user presses 's' the spaceship loses speed up down to 0.
-    self.body.speed = self.body.speed + Vector(Spaceship.Acl,0):rotated(self.body.angle+math.pi)
+    self.body.speed = self.body.speed + Vector(Spaceship.ACL,0):rotated(self.body.angle+math.pi)
 end
 
 function Spaceship:update(dt)
@@ -38,8 +41,10 @@ function Spaceship:update(dt)
     self.body.pos = self.body.pos + self.body.speed * dt
     local padding = 25
     self.body:wrap(-padding, love.graphics.getWidth()+padding, -padding, love.graphics.getHeight()+padding)
+    -- updates the collision object.
+    self.collision:moveTo(self.body.pos.x, self.body.pos.y)
+    self.collision:setRotation(self.body.angle)
 end
-
 
 function Spaceship:location()
     -- return xpos, ypos, angle, speed for rendering purposes.
@@ -75,6 +80,7 @@ function Spaceship:draw()
         love.graphics.draw(ShipBasePic, ShipQuad, self.body.pos.x, self.body.pos.y,
                            self.body.angle+math.pi/2, 1, 1, 33, 30)
     end
+    self.collision:draw("line") -- TODO remove
 end
 
 return Spaceship

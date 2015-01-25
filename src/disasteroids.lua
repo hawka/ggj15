@@ -1,4 +1,6 @@
+--
 -- this is where the logic for the disasteroids minigame will go.
+--
 local Class = require 'src.third_party.hump.class'
 local Ship = require 'src.spaceship'
 local Asteroid = require 'src.asteroid'
@@ -6,11 +8,20 @@ local AsteroidManager = require 'src.asteroid_manager'
 local Stars = require 'src.stars'
 local Vector = require 'src.third_party.hump.vector'
 local BulletHandler = require 'src.bullets'
+local Collider = require 'src.third_party.hardoncollider'
 
 local Disasteroids = Class{}
 
+function onCollision(dt, shape_one, shape_two)
+    -- Collider callback function.
+    print("bang!")
+    -- TODO
+end
+
 function Disasteroids:init(midpointX, midpointY, isActive)
     self.isActive = isActive
+    -- set up collider
+    collider = Collider(100, onCollision)
     -- set up stars
     self.stars = Stars(100)
     -- start the spaceship in the center of the screen
@@ -28,6 +39,15 @@ function Disasteroids:init(midpointX, midpointY, isActive)
 end
 
 function Disasteroids:update(dt)
+    -- Check for collisions.
+    collider:update(dt)
+
+    if self.ship.health < 1 then
+        -- TODO
+        print("YOU LOST SUCKER")
+        return
+    end
+
     -- Deal with turning.
     if love.keyboard.isDown( "a" ) then
         self.ship:turn("left")
@@ -72,7 +92,6 @@ function Disasteroids:update(dt)
     for k,v in pairs(self.asteroids) do
       v:update(dt)
     end
-    return
 end
 
 function Disasteroids:draw()
