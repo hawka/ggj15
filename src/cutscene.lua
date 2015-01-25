@@ -6,6 +6,7 @@ local Cutscene = Class {}
 
 function Cutscene:init(game, disaster)
     self.owner = game
+    self.gameover = false
     self.active = 1
     self.charPicDraw = {}
     self.charQuadDraw = nil
@@ -25,6 +26,18 @@ function Cutscene:init(game, disaster)
         self.responses[1] = "Yes, sir! Thank you, sir!"
         self.responses[2] = "I look forward to meeting my crew, sir."
         self.responses[3] = "Do I haaave to?"
+    elseif disaster == "dead" then
+        self.gameover = true
+        self.charPicDraw[1] = Admiral1Pic
+        self.charPicDraw[2] = Admiral2Pic
+        self.charPicDraw[3] = Admiral3Pic
+        self.charQuadDraw = AdmiralQuad
+        self.firstText = "ADMIRAL KRADOK:"
+        self.secondText = "Captain, we are sorry to hear you died in the course of your mission."
+        self.thirdText = "Congratulations on slaying "..score.." asteroids. You will be missed."
+        self.responses[1] = ""
+        self.responses[2] = ""
+        self.responses[3] = ""
     elseif disaster == "nofuel" then
         self.charPicDraw[1] = Shark1Pic
         self.charPicDraw[2] = Shark2Pic
@@ -128,10 +141,14 @@ function Cutscene:draw()
         love.graphics.print(self.secondText, 150, midpointY - 145)
         love.graphics.print(self.thirdText, 150, midpointY - 130)
         love.graphics.setColor(255, 255, 255, 255)
-        love.graphics.print("1.) "..self.responses[1], 60, midpointY - 40)
-        love.graphics.print("2.) "..self.responses[2], 60, midpointY - 25)
-        love.graphics.print("3.) "..self.responses[3], 60, midpointY - 10)
-        love.graphics.print("[select reponse 1, 2, or 3]", 60, midpointY + 25)
+        if not self.gameover then
+            love.graphics.print("1.) "..self.responses[1], 60, midpointY - 40)
+            love.graphics.print("2.) "..self.responses[2], 60, midpointY - 25)
+            love.graphics.print("3.) "..self.responses[3], 60, midpointY - 10)
+            love.graphics.print("[select reponse 1, 2, or 3]", 60, midpointY + 25)
+        else 
+            love.graphics.print("R.I.P.", 60, midpointY + 25)
+        end
         love.graphics.reset()
     end
 end
@@ -146,6 +163,9 @@ function Cutscene:update()
     -- TODO check for response selection (numbers)
     -- TODO check for spacebar hit to end cutscene?
     if self.active and love.keyboard.isDown("1") or love.keyboard.isDown("2") or love.keyboard.isDown("3") then
+        if self.gameover then 
+            return
+        end
         self.active = false
         self.owner.cutscene = nil
     end

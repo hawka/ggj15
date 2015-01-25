@@ -96,6 +96,7 @@ function Spaceship:draw()
         elseif self.health <= -12 then
             love.graphics.draw(ShipExplode4Pic, ShipExplodeQuad, self.body.pos.x, self.body.pos.y,
                                self.body.angle+math.pi/2, 1, 1, 40, 30)
+            minigame:launchCutscene("dead")
             return
         end
         self.health = self.health - 0.3 --HACK THE PLANET XXX
