@@ -13,6 +13,8 @@ function Spaceship:init(x, y)
     self.shooting = false
     self.health = 3
     self.collision = collider:addRectangle(x-26, y-33, 50, 64)
+    self.collision.name = "ship"
+    self.collision.owner = self
 end
 
 function Spaceship:turn(direction)
@@ -55,6 +57,27 @@ end
 -- Rendering functions
 --
 function Spaceship:draw()
+    -- Deal with ship destruction rendering.
+    if self.health < 1 then
+        if self.health <= 0 and self.health > -4 then
+            love.graphics.draw(ShipExplode1Pic, ShipExplodeQuad, self.body.pos.x, self.body.pos.y,
+                               self.body.angle+math.pi/2, 1, 1, 40, 30)
+        elseif self.health <= -4 and self.health > -8 then
+            love.graphics.draw(ShipExplode2Pic, ShipExplodeQuad, self.body.pos.x, self.body.pos.y,
+                               self.body.angle+math.pi/2, 1, 1, 40, 30)
+        elseif self.health <= -8 and self.health > -12 then
+            love.graphics.draw(ShipExplode3Pic, ShipExplodeQuad, self.body.pos.x, self.body.pos.y,
+                               self.body.angle+math.pi/2, 1, 1, 40, 30)
+        elseif self.health <= -12 then
+            love.graphics.draw(ShipExplode4Pic, ShipExplodeQuad, self.body.pos.x, self.body.pos.y,
+                               self.body.angle+math.pi/2, 1, 1, 40, 30)
+            return
+        end
+        self.health = self.health - 0.3
+        return
+    end
+
+    -- Deal with normal ship rendering.
     if self.thrustersOn == 1 and self.shooting then
         love.graphics.draw(ShipMoveShoot1Pic, ShipQuad, self.body.pos.x, self.body.pos.y,
                            self.body.angle+math.pi/2, 1, 1, 33, 30)

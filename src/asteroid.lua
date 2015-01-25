@@ -16,6 +16,8 @@ function Asteroid:init(size, x, y, linearVelocity, angularVelocity)
     self.body.speed = linearVelocity
     self.angularVelocity = angularVelocity -- rad/sec
     self.collision = collider:addCircle(x, y, 40)
+    self.collision.name = "asteroid"
+    self.collision.owner = self
 end
 
 function Asteroid:update(dt)
@@ -29,8 +31,8 @@ end
 
 -- Draw code
 function Asteroid:draw()
-    love.graphics.draw(AsteroidLargePic, AsteroidQuad, self.body.pos.x, self.body.pos.y,
-                       self.body.angle+math.pi/2, 1, 1, 40, 40)
+    love.graphics.draw(AsteroidLargePic, AsteroidLargeQuad, self.body.pos.x, self.body.pos.y,
+                       self.body.angle+math.pi/2, 1, 1, 77/2, 77/2)
     self.collision:draw("line") -- TODO
 end
 

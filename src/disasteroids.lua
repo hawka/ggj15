@@ -14,8 +14,27 @@ local Disasteroids = Class{}
 
 function onCollision(dt, shape_one, shape_two)
     -- Collider callback function.
-    print("bang!")
-    -- TODO
+    if shape_one.name == "bullet" then
+        if shape_two.name == "asteroid" then
+            -- TODO knock asteroid down a peg
+            shape_one.owner:remove()
+        end
+    elseif shape_one.name == "ship" then
+        if shape_two.name == "asteroid" then
+            shape_one.owner.health = shape_one.owner.health - 1
+            -- TODO get rid of asteroid
+        end
+    elseif shape_one.name == "asteroid" then
+        if shape_two.name == "ship" then
+            shape_two.owner.health = shape_two.owner.health - 1
+            -- TODO get rid of asteroid
+        elseif shape_two == "bullet" then
+            -- TODO knock asteroid down a peg
+            shape_two.owner:remove()
+        end
+    else
+        print("unknown collision type: " + shape_one.name)
+    end
 end
 
 function Disasteroids:init(midpointX, midpointY, isActive)
@@ -39,14 +58,13 @@ function Disasteroids:init(midpointX, midpointY, isActive)
 end
 
 function Disasteroids:update(dt)
-    -- Check for collisions.
-    collider:update(dt)
-
+    -- Check for death.
     if self.ship.health < 1 then
-        -- TODO
-        print("YOU LOST SUCKER")
         return
     end
+
+    -- Check for collisions.
+    collider:update(dt)
 
     -- Deal with turning.
     if love.keyboard.isDown( "a" ) then
@@ -97,10 +115,10 @@ end
 function Disasteroids:draw()
     self.stars:draw()
     self.bullethandler:draw()
-    self.ship:draw()
     for k,v in pairs(self.asteroids) do
       v:draw()
     end
+    self.ship:draw()
 end
 
 return Disasteroids

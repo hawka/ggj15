@@ -21,8 +21,19 @@ function love.load()
 
     ShipQuad = love.graphics.newQuad(0, 0, 66, 60, ShipBasePic:getDimensions())
 
+    ShipExplode1Pic = love.graphics.newImage('res/ship/explode1.gif')
+    ShipExplode2Pic = love.graphics.newImage('res/ship/explode2.gif')
+    ShipExplode3Pic = love.graphics.newImage('res/ship/explode3.gif')
+    ShipExplode4Pic = love.graphics.newImage('res/ship/explode4.gif')
+
+    ShipExplodeQuad = love.graphics.newQuad(0, 0, 80, 60, ShipExplode1Pic:getDimensions())
+
     AsteroidLargePic = love.graphics.newImage('res/asteroids/asteroidlarge.gif')
-    AsteroidQuad = love.graphics.newQuad(0, 0, 100, 100, AsteroidLargePic:getDimensions())
+    AsteroidLargeQuad = love.graphics.newQuad(0, 0, 77, 77, AsteroidLargePic:getDimensions())
+    AsteroidMedPic = love.graphics.newImage('res/asteroids/asteroidmed.gif')
+    AsteroidMedQuad = love.graphics.newQuad(0, 0, 77, 77, AsteroidMedPic:getDimensions())
+    AsteroidSmallPic = love.graphics.newImage('res/asteroids/asteroidsmall.gif')
+    AsteroidSmallQuad = love.graphics.newQuad(0, 0, 77, 77, AsteroidSmallPic:getDimensions())
 
     -- 2. initialize global variables.
     gameIsPaused = false

@@ -5,6 +5,8 @@
 local Class = require 'src.third_party.hump.class'
 local Vector = require 'src.third_party.hump.vector'
 local Movable =  require 'src.movable'
+local Collider = require 'src.third_party.hardoncollider'
+
 local Bullet = Class {}
 local BulletHandler = Class {}
 
@@ -54,10 +56,14 @@ function Bullet:init(x, y, angle, speed)
     self.body = Movable(x, y)
     self.body.angle = angle -- to account for ship angle
     self.body.speed = speed + Vector(200, 0):rotated(self.body.angle)
+    self.collision = collider:addPoint(self.body.pos.x, self.body.pos.y)
+    self.collision.name = "bullet"
+    self.collision.owner = self
 end
 
 function Bullet:update(dt)
     self.body.pos = self.body.pos + self.body.speed * dt
+    self.collision:moveTo(self.body.pos.x, self.body.pos.y)
 end
 
 function Bullet:draw()
@@ -67,4 +73,12 @@ function Bullet:draw()
     love.graphics.reset()
 end
 
-return BulletHandler -- to account for ship angle
+function Bullet:remove()
+    -- This is a hack. By moving the bullet outside of the play space,
+    -- we ensure it will be removed from the BulletHandler's consideration
+    -- on the next call to update. Make sure no asteroids ever go this far.
+    self.body.pos = Vector(-500, -500)
+    self.body.speed = Vector(0, 0)
+end
+
+return BulletHandler
