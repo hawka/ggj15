@@ -127,6 +127,13 @@ function love.keypressed(key, isrepeat)
     if key == 'p' then
         gameIsPaused = not gameIsPaused
     end
+    if key == 'r' then
+        gameIsPaused = false
+        disasterManager = DisasterManager()
+        round = 0
+        minigame = Disasteroids(midpointX, midpointY, true, round+5)
+        score = 0
+    end
     if key == '0' and not minigame.cutscene then
         disasterManager:newDisaster()
         TEsound.play(MenuSound)

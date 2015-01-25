@@ -147,7 +147,7 @@ function Cutscene:draw()
             love.graphics.print("3.) "..self.responses[3], 60, midpointY - 10)
             love.graphics.print("[select reponse 1, 2, or 3]", 60, midpointY + 25)
         else
-            love.graphics.print("R.I.P.", 60, midpointY + 25)
+            love.graphics.print("R.I.P. Press 'r' to play again.", 60, midpointY + 25)
         end
         love.graphics.reset()
     end
