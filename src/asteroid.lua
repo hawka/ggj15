@@ -56,7 +56,7 @@ function Asteroid:draw()
     pic, quad = asteroidImg(self.size)
     if disasterManager:is("sensors") then
         --scale alpha if we are having sensor issues
-        local alpha = 300 - minigame.ship.body.pos:dist(self.body.pos) / 2
+        local alpha = 300 - minigame.ship.body.pos:dist(self.body.pos) / 1.5
         if alpha < 0 then alpha = 0 elseif alpha > 255 then alpha = 255 end
         love.graphics.setColor(alpha,alpha,255,alpha)
     end
