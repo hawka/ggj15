@@ -53,7 +53,7 @@ function onCollision(dt, shape_one, shape_two)
     end
 end
 
-function Disasteroids:init(midpointX, midpointY, isActive)
+function Disasteroids:init(midpointX, midpointY, isActive, numAsteroids)
     self.isActive = isActive
     -- set up disaster table.
     -- disasters are mapped to false unless active.
@@ -68,17 +68,16 @@ function Disasteroids:init(midpointX, midpointY, isActive)
     -- set up asteroids
     self.asteroids = {}
     self.asteroidManager = AsteroidManager()
-    self.asteroidManager:spawn(self.ship.body.pos)
-    self.asteroidManager:spawn(self.ship.body.pos)
-    self.asteroidManager:spawn(self.ship.body.pos)
-    self.asteroidManager:spawn(self.ship.body.pos)
-    self.asteroidManager:spawn(self.ship.body.pos)
+    for i = 1,numAsteroids do
+        self.asteroidManager:spawn(self.ship.body.pos)
+    end
     -- set up bullet handling.
     self.bullethandler = BulletHandler()
     self.newBulletAvailable = true
     -- set up timer.
     self.timer = Timer.new()
-    self.timer.addPeriodic(1.5, function() self.asteroidManager:spawn(self.ship.body.pos) end)
+    local spawnTime = math.random(3,10)/3
+    self.timer.addPeriodic(spawnTime, function() self.asteroidManager:spawn(self.ship.body.pos) end)
     -- set up ui.
     self.ui = UIHandler(self)
 end
