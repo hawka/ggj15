@@ -16,6 +16,19 @@ function radius(size)
     if size == 0 then return 42/2 end
 end
 
+function asteroidImg(size)
+    --get quad and picture for the asteroid
+    if size == 2 then
+        return AsteroidLargePic, AsteroidLargeQuad
+    end
+    if size == 1 then
+        return AsteroidMedPic, AsteroidMedQuad
+    end
+    if size == 0 then
+        return AsteroidSmallPic, AsteroidSmallQuad
+    end
+end
+
 function Asteroid:init(size, x, y, linearVelocity, angularVelocity)
     self.alive = true
     self.size = size -- tracks how many times it can be split: 2, 1, 0
@@ -38,7 +51,10 @@ end
 
 -- Draw code
 function Asteroid:draw()
-    love.graphics.draw(AsteroidLargePic, AsteroidLargeQuad, self.body.pos.x, self.body.pos.y,
+    local pic
+    local quad
+    pic, quad = asteroidImg(self.size)
+    love.graphics.draw(pic, quad, self.body.pos.x, self.body.pos.y,
                        self.body.angle+math.pi/2, 1, 1, radius(self.size), radius(self.size))
     self.collision:draw("line") -- TODO
 end

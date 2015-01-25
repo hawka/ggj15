@@ -30,8 +30,8 @@ end
 
 function BulletHandler:update(dt)
     for bullet,v in pairs(self.bullets) do
-        if v and bullet.body:isOutsideBounds(0, love.graphics.getWidth(),
-                                             0, love.graphics.getHeight()) then
+        if v and bullet.body:isOutsideBounds(-30, love.graphics.getWidth()+30,
+                                             -30, love.graphics.getHeight()+30) then
             -- remove from tracked bullets
             self.bullets[bullet] = nil
         elseif v then
@@ -67,7 +67,7 @@ function Bullet:update(dt)
 end
 
 function Bullet:draw()
-    love.graphics.setPointSize(2)
+    love.graphics.setPointSize(3)
     love.graphics.setColor(255, 0, 0)
     love.graphics.point(self.body.pos.x, self.body.pos.y)
     love.graphics.reset()

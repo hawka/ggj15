@@ -31,9 +31,9 @@ function love.load()
     AsteroidLargePic = love.graphics.newImage('res/asteroids/asteroidlarge.gif')
     AsteroidLargeQuad = love.graphics.newQuad(0, 0, 77, 77, AsteroidLargePic:getDimensions())
     AsteroidMedPic = love.graphics.newImage('res/asteroids/asteroidmed.gif')
-    AsteroidMedQuad = love.graphics.newQuad(0, 0, 77, 77, AsteroidMedPic:getDimensions())
+    AsteroidMedQuad = love.graphics.newQuad(0, 0, 56, 56, AsteroidMedPic:getDimensions())
     AsteroidSmallPic = love.graphics.newImage('res/asteroids/asteroidsmall.gif')
-    AsteroidSmallQuad = love.graphics.newQuad(0, 0, 77, 77, AsteroidSmallPic:getDimensions())
+    AsteroidSmallQuad = love.graphics.newQuad(0, 0, 42, 42, AsteroidSmallPic:getDimensions())
 
     -- 2. initialize global variables.
     gameIsPaused = false
