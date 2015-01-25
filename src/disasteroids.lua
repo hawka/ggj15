@@ -6,6 +6,7 @@ local Vector = require 'src.third_party.hump.vector'
 local Collider = require 'src.third_party.hardoncollider'
 local Vector = require 'src.third_party.hump.vector'
 local Timer = require 'src.third_party.hump.timer'
+require 'src.third_party.TEsound'
 
 local Ship = require 'src.spaceship'
 local Asteroid = require 'src.asteroid'
@@ -127,6 +128,7 @@ function Disasteroids:update(dt)
 
     -- Deal with shooting.
     if love.keyboard.isDown(" ") and self.newBulletAvailable then
+        TEsound.play(LaserSound)
         self.ship.shooting = true
         self.bullethandler:addBullet(self.ship:location())
         self.newBulletAvailable = false

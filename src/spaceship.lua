@@ -7,6 +7,7 @@ local Movable =  require 'src.movable'
 local Collider = require 'src.third_party.hardoncollider'
 local Timer = require 'src.third_party.hump.timer'
 local Spaceship = Class { ACL = 1.5 }
+require 'src.third_party.TEsound'
 
 function Spaceship:init(x, y)
     self.body = Movable(x, y)
@@ -21,6 +22,7 @@ function Spaceship:init(x, y)
 end
 
 function Spaceship:hurt()
+    TEsound.play(DeathSound)
     if self.invincible then
         return --safe for now!
     end

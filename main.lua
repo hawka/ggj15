@@ -41,6 +41,14 @@ function love.load()
     HeaderFont = love.graphics.newFont('res/fonts/Jura-DemiBold.ttf', 40)
     SmallFont = love.graphics.newFont('res/fonts/Jura-DemiBold.ttf', 20)
 
+    -- SOUNDS
+    ExpSound1 = "res/sfx/explosion1.ogg"
+    ExpSound2 = "res/sfx/explosion2.ogg"
+    ExpSound3 = "res/sfx/explosion3.ogg"
+    ExpSounds = {ExpSound1, ExpSound2, ExpSound3}
+    LaserSound = "res/sfx/shoot.ogg"
+    DeathSound = "res/sfx/death.ogg"
+
     -- 2. initialize global variables.
     gameIsPaused = false
     midpointX = love.graphics.getWidth()/2

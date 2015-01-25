@@ -4,6 +4,7 @@
 local Class = require 'src.third_party.hump.class'
 local Asteroid = require 'src.asteroid'
 local Vector = require 'src.third_party.hump.vector'
+require 'src.third_party.TEsound'
 
 local AsteroidManager = Class {}
 
@@ -17,6 +18,7 @@ function AsteroidManager:spawn(playerPos)
 end
 
 function AsteroidManager:destroyOrSplit(asteroid)
+    TEsound.play(ExpSounds)
     -- destroy an asteroid and create 2 smaller ones, if possible
     local body = asteroid.body
     local oldSize = asteroid.size
