@@ -31,7 +31,7 @@ function AsteroidManager:destroyOrSplit(asteroid)
     -- TODO awful magic numbers
     local newSpeed1 =  Vector(math.random(-body.speed.x*1.5,body.speed.x*1.5), math.random(-body.speed.x*1.5,1.5*body.speed.x))
     local newSpeed2 = body.speed - newSpeed1
-    local magic = oldSize*10
+    local magic = oldSize*15
     new1 = Asteroid(newSize,
         body.pos.x + math.random(-magic,magic),
         body.pos.y + math.random(-magic,magic),

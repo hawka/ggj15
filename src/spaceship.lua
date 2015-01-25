@@ -15,7 +15,7 @@ function Spaceship:init(x, y)
     self.health = 3
     self.invincible = false
     self.invincibleTimer = Timer.new()
-    self.collision = collider:addRectangle(x-26, y-33, 50, 64)
+    self.collision = collider:addRectangle(x-32, y-23, 40, 54)
     self.collision.name = "ship"
     self.collision.owner = self
 end

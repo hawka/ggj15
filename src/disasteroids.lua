@@ -78,7 +78,7 @@ function Disasteroids:init(midpointX, midpointY, isActive)
     self.newBulletAvailable = true
     -- set up timer.
     self.timer = Timer.new()
-    self.timer.addPeriodic(2, function() self.asteroidManager:spawn(self.ship.body.pos) end)
+    self.timer.addPeriodic(1.5, function() self.asteroidManager:spawn(self.ship.body.pos) end)
     -- set up ui.
     self.ui = UIHandler(self)
 end
