@@ -62,5 +62,6 @@ function Asteroid:draw()
     end
     love.graphics.draw(pic, quad, self.body.pos.x, self.body.pos.y,
                        self.body.angle+math.pi/2, 1, 1, radius(self.size), radius(self.size))
+    love.graphics.reset()
 end
 return Asteroid

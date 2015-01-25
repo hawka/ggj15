@@ -57,7 +57,7 @@ end
 
 function Disasteroids:init(midpointX, midpointY, isActive, numAsteroids)
     self.isActive = isActive
-    self.cutscene = nil -- Cutscene(self, nil)
+    self.cutscene = Cutscene(self, nil)
     -- set up collider
     collider = Collider(100, onCollision)
     -- set up stars
@@ -158,7 +158,7 @@ function Disasteroids:draw()
     self.bullethandler:draw()
     self.asteroidManager:draw()
     self.ship:draw()
-    if self.cutscene then
+    if self.cutscene and self.cutscene.active then
         self.cutscene:draw()
     end
 end
