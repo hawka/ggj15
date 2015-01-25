@@ -42,8 +42,8 @@ end
 
 
 function Spaceship:location()
-    -- return xpos, ypos, angle for rendering purposes.
-    return self.body.pos.x, self.body.pos.y, self.body.angle
+    -- return xpos, ypos, angle, speed for rendering purposes.
+    return self.body.pos.x, self.body.pos.y, self.body.angle, self.body.speed
 end
 
 --

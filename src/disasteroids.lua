@@ -45,6 +45,9 @@ function Disasteroids:update(dt)
         self.ship:accelerate()
     elseif love.keyboard.isDown("s") then
         self.ship:decelerate()
+        self.ship.thrustersOn = false
+    else
+        self.ship.thrustersOn = false
     end
 
     -- Deal with shooting.
