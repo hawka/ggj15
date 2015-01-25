@@ -7,22 +7,40 @@ local Vector = require 'src.third_party.hump.vector'
 
 local AsteroidManager = Class {}
 
-function AsteroidManager:init() 
+function AsteroidManager:init()
     self.asteroids = {}
-end    
+end
 
-function AsteroidManager:spawn(pVec)
-    local possiblePoint = nil 
+function AsteroidManager:spawn(playerPos)
+    local a = AsteroidManager:new(playerPos)
+    self.asteroids[a] = a -- hack??
+end
+
+function AsteroidManager:update(dt)
+    for k,v in pairs(self.asteroids) do
+      v:update(dt)
+    end
+end
+
+function AsteroidManager:draw()
+    for k,v in pairs(self.asteroids) do
+        v:draw()
+    end
+end
+
+function AsteroidManager:new(pVec)
+    -- return an asteroid at a nice location
+    local possiblePoint = nil
     while true do
         possiblePoint = newPointOnEdge()
         if not pointIsTooClose(pVec, possiblePoint) then break end
     end
     speed = Vector(math.random(-40,40), math.random(-40,40))
     rotation = math.random() / 2
-    return Asteroid(3, possiblePoint.x, possiblePoint.y, speed, rotation)
+    return Asteroid(2, possiblePoint.x, possiblePoint.y, speed, rotation)
 end
 
-function randBool() 
+function randBool()
     local array = {true, false}
     return array[math.random(1,2)]
 end

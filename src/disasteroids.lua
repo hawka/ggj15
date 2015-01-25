@@ -48,10 +48,11 @@ function Disasteroids:init(midpointX, midpointY, isActive)
     -- set up asteroids
     self.asteroids = {}
     self.asteroidManager = AsteroidManager()
-    table.insert(self.asteroids, AsteroidManager:spawn(self.ship.body.pos))
-    table.insert(self.asteroids, AsteroidManager:spawn(self.ship.body.pos))
-    table.insert(self.asteroids, AsteroidManager:spawn(self.ship.body.pos))
-    table.insert(self.asteroids, AsteroidManager:spawn(self.ship.body.pos))
+    self.asteroidManager:spawn(self.ship.body.pos)
+    self.asteroidManager:spawn(self.ship.body.pos)
+    self.asteroidManager:spawn(self.ship.body.pos)
+    self.asteroidManager:spawn(self.ship.body.pos)
+    self.asteroidManager:spawn(self.ship.body.pos)
     -- set up bullet handling.
     self.bullethandler = BulletHandler()
     self.newBulletAvailable = true
@@ -107,18 +108,16 @@ function Disasteroids:update(dt)
     --update the player
     self.ship:update(dt)
     --update other entities
-    for k,v in pairs(self.asteroids) do
-      v:update(dt)
-    end
+    self.asteroidManager:update(dt)
+
+    return
 end
 
 function Disasteroids:draw()
     self.stars:draw()
     self.bullethandler:draw()
-    for k,v in pairs(self.asteroids) do
-      v:draw()
-    end
     self.ship:draw()
+    self.asteroidManager:draw()
 end
 
 return Disasteroids

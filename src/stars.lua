@@ -36,7 +36,7 @@ end
 function Starfield:update(dt)
     for k,v in pairs(self.stars) do
         v.body.pos.y = v.body.pos.y + v.speed
-        v.body:wrap(0,love.graphics.getWidth(), 0, love.graphics.getHeight()) 
+        v.body:wrap(0,love.graphics.getWidth(), 0, love.graphics.getHeight())
     end
 end
 

@@ -35,5 +35,4 @@ function Asteroid:draw()
                        self.body.angle+math.pi/2, 1, 1, 77/2, 77/2)
     self.collision:draw("line") -- TODO
 end
-
 return Asteroid
