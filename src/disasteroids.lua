@@ -2,13 +2,15 @@
 -- this is where the logic for the disasteroids minigame will go.
 --
 local Class = require 'src.third_party.hump.class'
+local Vector = require 'src.third_party.hump.vector'
+local Collider = require 'src.third_party.hardoncollider'
+
 local Ship = require 'src.spaceship'
 local Asteroid = require 'src.asteroid'
 local AsteroidManager = require 'src.asteroid_manager'
 local Stars = require 'src.stars'
-local Vector = require 'src.third_party.hump.vector'
 local BulletHandler = require 'src.bullets'
-local Collider = require 'src.third_party.hardoncollider'
+local UIHandler = require 'src.ui'
 
 local Disasteroids = Class{}
 

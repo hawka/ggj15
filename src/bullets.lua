@@ -63,7 +63,7 @@ end
 
 function Bullet:update(dt)
     self.body.pos = self.body.pos + self.body.speed * dt
-    self.collision:moveTo(self.body.pos.x, self.body.pos.y)
+    self.collision:move(self.body.speed.x * dt, self.body.speed.y * dt)
 end
 
 function Bullet:draw()
