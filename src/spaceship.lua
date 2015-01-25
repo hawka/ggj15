@@ -50,23 +50,17 @@ end
 -- Rendering functions
 --
 function Spaceship:draw()
-    if self.thrustersOn and self.shooting == 1 then
-        love.graphics.draw(ShipMove1Pic, ShipQuad, self.body.pos.x, self.body.pos.y,
+    if self.thrustersOn == 1 and self.shooting then
+        love.graphics.draw(ShipMoveShoot1Pic, ShipQuad, self.body.pos.x, self.body.pos.y,
                            self.body.angle+math.pi/2, 1, 1, 33, 30)
-    elseif self.thrustersOn and self.shooting == 2 then
-        love.graphics.draw(ShipMove2Pic, ShipQuad, self.body.pos.x, self.body.pos.y,
+    elseif self.thrustersOn == 2 and self.shooting then
+        love.graphics.draw(ShipMoveShoot2Pic, ShipQuad, self.body.pos.x, self.body.pos.y,
                            self.body.angle+math.pi/2, 1, 1, 33, 30)
-    elseif self.thrustersOn and self.shooting == 3 then
-        love.graphics.draw(ShipMove3Pic, ShipQuad, self.body.pos.x, self.body.pos.y,
+    elseif self.thrustersOn == 3 and self.shooting then
+        love.graphics.draw(ShipMoveShoot3Pic, ShipQuad, self.body.pos.x, self.body.pos.y,
                            self.body.angle+math.pi/2, 1, 1, 33, 30)
-    elseif self.shooting == 1 then
-        love.graphics.draw(ShipShoot1Pic, ShipQuad, self.body.pos.x, self.body.pos.y,
-                           self.body.angle+math.pi/2, 1, 1, 33, 30)
-    elseif self.shooting == 2 then
-        love.graphics.draw(ShipShoot2Pic, ShipQuad, self.body.pos.x, self.body.pos.y,
-                           self.body.angle+math.pi/2, 1, 1, 33, 30)
-    elseif self.shooting == 3 then
-        love.graphics.draw(ShipShoot3Pic, ShipQuad, self.body.pos.x, self.body.pos.y,
+    elseif self.shooting then
+        love.graphics.draw(ShipShootPic, ShipQuad, self.body.pos.x, self.body.pos.y,
                            self.body.angle+math.pi/2, 1, 1, 33, 30)
     elseif self.thrustersOn == 1 then
         love.graphics.draw(ShipMove1Pic, ShipQuad, self.body.pos.x, self.body.pos.y,

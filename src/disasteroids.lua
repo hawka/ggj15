@@ -44,11 +44,9 @@ function Disasteroids:update(dt)
 
     -- Deal with shooting.
     if love.keyboard.isDown(" ") and self.newBulletAvailable then
-        self.ship.shooting = 1
+        self.ship.shooting = true
         self.bullethandler:addBullet(self.ship:location())
         self.newBulletAvailable = false
-    elseif self.ship.shooting and self.ship.shooting < 3 then
-        self.ship.shooting = self.ship.shooting + 1
     elseif not love.keyboard.isDown(" ") then
         self.ship.shooting = false
         self.newBulletAvailable = true
