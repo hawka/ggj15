@@ -1,6 +1,9 @@
 Class = require 'src.third_party.hump.class' -- `Class' is now a shortcut to new()
 Disasteroids = require 'src.disasteroids'
 
+-- for better random numbers
+math.randomseed( os.time() )
+
 function love.load()
     -- love calls this once, on game startup.
     -- this is the place to load resources, initialize variables, etc.

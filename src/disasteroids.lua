@@ -17,7 +17,11 @@ function Disasteroids:init(midpointX, midpointY, isActive)
     self.ship = Ship(midpointX, midpointY)
     -- set up asteroids
     self.asteroids = {}
-    table.insert(self.asteroids, Asteroid(3, 500, 500, Vector(10,20), .2))
+    self.asteroidManager = AsteroidManager()
+    table.insert(self.asteroids, AsteroidManager:spawn(self.ship.body.pos))
+    table.insert(self.asteroids, AsteroidManager:spawn(self.ship.body.pos))
+    table.insert(self.asteroids, AsteroidManager:spawn(self.ship.body.pos))
+    table.insert(self.asteroids, AsteroidManager:spawn(self.ship.body.pos))
     -- set up bullet handling.
     self.bullethandler = BulletHandler()
     self.newBulletAvailable = true
