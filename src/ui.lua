@@ -8,14 +8,6 @@ local UIHandler = Class {}
 
 function UIHandler:init(game)
     self.owner = game
-    self.text = {}
-    self.text["nofuel"] = "Fuel Line Rerouted"
-    self.text["noslow"] = "Reverse Thrusters Repaired"
-    self.text["turnleft"] = "Right Engine Retuned"
-    self.text["turnright"] = "Left Engine Overhauled"
-    self.text["controlswap"] = "Life Support Restored"
-    self.text["gunproblem"] = "Cannon Malfunction Fixed"
-    self.text["sensors"] = "Sensors Back Online"
 end
 
 function UIHandler:draw()
@@ -30,18 +22,8 @@ function UIHandler:draw()
         health = "Multiple Hull Breaches"
     end
 
-    love.graphics.print("Hull Integrity:  "..health, 10, love.graphics.getHeight() - 100)
-
-    love.graphics.print("Asteroids Destroyed:  "..score, 10, love.graphics.getHeight() - 80)
-
-    local numDisasters = 0
-    for disaster,status in pairs(self.owner.disasters) do
-        if status then
-            love.graphics.print("ETA til "..self.text[disaster]..":  "..status.."s",
-                                10, love.graphics.getHeight() - 60 - numDisasters*20)
-            numDisasters = numDisasters + 1
-        end
-    end
+    love.graphics.print("Hull Integrity:  "..health, 10, love.graphics.getHeight() - 60)
+    love.graphics.print("Asteroids Destroyed:  "..score, 10, love.graphics.getHeight() - 40)
 end
 
 return UIHandler

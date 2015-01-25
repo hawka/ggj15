@@ -131,7 +131,6 @@ function Spaceship:draw()
         love.graphics.draw(ShipBasePic, ShipQuad, self.body.pos.x, self.body.pos.y,
                            self.body.angle+math.pi/2, 1, 1, 33, 30)
     end
-    self.collision:draw("line") -- TODO remove
     --reset color
     love.graphics.setColor(255,255,255,255)
 end

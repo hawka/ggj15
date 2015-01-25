@@ -51,7 +51,7 @@ function love.load()
 
     -- FONTS
     love.graphics.setDefaultFilter("nearest", "nearest")
-    HeaderFont = love.graphics.newFont('res/fonts/Jura-DemiBold.ttf', 40)
+    CutsceneFont = love.graphics.newFont('res/fonts/Jura-DemiBold.ttf', 14)
     SmallFont = love.graphics.newFont('res/fonts/Jura-DemiBold.ttf', 20)
 
     -- SOUNDS
@@ -81,14 +81,16 @@ function love.update(dt)
         return
     end
 
-    if minigame.isActive then
+    if minigame.isActive and not minigame.cutscene then
         disasterManager:update(dt)
         minigame:update(dt)
 
         if disasterManager.readyToChange then
             disasterManager:newDisaster()
-            print("AHHHHH", disasterManager.disaster)
+            minigame:launchCutscene(minigame, disasterMangager.disaster)
         end
+    elseif minigame.isActive and minigame.cutscene then
+        minigame.cutscene:update()
     end
 end
 
@@ -118,9 +120,9 @@ function love.keypressed(key, isrepeat)
     if key == 'p' then
         gameIsPaused = not gameIsPaused
     end
-    if key == '0' then
+    if key == '0' and not minigame.cutscene then
         disasterManager:newDisaster()
-        print("AHHHHH", disasterManager.disaster)
+        minigame:launchCutscene(disasterManager.disaster)
     end
 
 end

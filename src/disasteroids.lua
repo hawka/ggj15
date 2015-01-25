@@ -57,11 +57,7 @@ end
 
 function Disasteroids:init(midpointX, midpointY, isActive, numAsteroids)
     self.isActive = isActive
-    self.cutscene = Cutscene(self, nil)
-    -- set up disaster table.
-    -- disasters are mapped to false unless active.
-    -- if active, they are mapped to seconds til fix.
-    self.disasters = {}
+    self.cutscene = nil -- Cutscene(self, nil)
     -- set up collider
     collider = Collider(100, onCollision)
     -- set up stars
@@ -85,15 +81,13 @@ function Disasteroids:init(midpointX, midpointY, isActive, numAsteroids)
     self.ui = UIHandler(self)
 end
 
+function Disasteroids:launchCutscene(disaster)
+    self.cutscene = Cutscene(self, disaster)
+end
 
 function Disasteroids:update(dt)
     -- Check for death.
     if self.ship.health < 1 then
-        return
-    end
-
-    if self.cutscene then
-        self.cutscene:update()
         return
     end
 
@@ -164,7 +158,9 @@ function Disasteroids:draw()
     self.bullethandler:draw()
     self.asteroidManager:draw()
     self.ship:draw()
-    self.cutscene:draw()
+    if self.cutscene then
+        self.cutscene:draw()
+    end
 end
 
 return Disasteroids

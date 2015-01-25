@@ -7,9 +7,10 @@ local Timer = require 'src.third_party.hump.timer'
 
 DisasterManager = Class{}
 
-function DisasterManager:init()
+function DisasterManager:init(game)
     self.disaster = ""
     self.disasters = {"nofuel","noslow","turnleft","turnright","controlswap","gunproblem","sensors"}
+    self.game = game
     self.timer = Timer.new()
     self:queueDisaster()
     self.readyToChange = false
@@ -40,7 +41,6 @@ function DisasterManager:newDisaster()
     self:queueDisaster()
     self:startCountdown()
 end
-
 
 function DisasterManager:update(dt)
     self.timer.update(dt)
